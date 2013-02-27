@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -19,8 +20,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class FileExplore extends Activity {
+public class FileExplore extends Activity 
+{
 
 	// Stores names of traversed directories
 	ArrayList<String> str = new ArrayList<String>();
@@ -198,7 +201,14 @@ public class FileExplore extends Activity {
 					}
 					// File picked
 					else {
+						Log.d("FileExplore", "File selected: " +sel.getAbsolutePath());
+						toastPath(sel);
 						// Perform action with file picked
+						
+						Intent resultIntent = new Intent();
+						resultIntent.putExtra("filepath", sel.getAbsolutePath());
+						setResult(1, resultIntent);
+						finish();
 					}
 
 				}
@@ -207,6 +217,12 @@ public class FileExplore extends Activity {
 		}
 		dialog = builder.show();
 		return dialog;
+	}
+	
+	
+	private void toastPath(File f)
+	{
+		Toast.makeText(this, f.getAbsolutePath(), Toast.LENGTH_SHORT).show();
 	}
 
 }

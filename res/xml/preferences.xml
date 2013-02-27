@@ -2,39 +2,68 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <CheckBoxPreference
-        android:key="recursive_delete"
-        android:title="Recursive delete"
-        android:summary="Delete all sub folders too"
+        android:key="active"
+        android:title="Enable service"
+        android:summaryOn="Service is active"
+        android:summaryOff="Service is inactive"
         android:defaultValue="false"
+        android:disableDependentsState="false"
         />
-    <EditTextPreference
-        android:key="clear_interval"
-        android:title="Delete interval"
-        android:summary="How often to clear folder (mins)"
-        android:defaultValue="60"
-        />
-    <CheckBoxPreference 
-        android:key="strict_interval"
-        android:title="Strict interval [unimplemented]"
-        android:summaryOn="Clear folder exactly on interval"
-        android:summaryOff="Clear folder loosely on interval"
-        android:defaultValue="false"
-        />
+    
+    <PreferenceCategory 
+        android:title="Delete settings"
+        >
+        <EditTextPreference 
+            android:key="folder"
+            android:title="Select folder to clear:"
+            android:summary="[Folder path]"
+            android:dependency="active"
+            />
+        <CheckBoxPreference
+            android:key="recursive_delete?"
+            android:title="Recursive delete"
+            android:summaryOn="Delete all sub folders too"
+            android:summaryOff="Do not delete sub folders"
+            android:defaultValue="false"
+            android:dependency="active"
+            />
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="Interval settings"
+        >
+        <EditTextPreference
+            android:key="clear_interval"
+            android:title="Delete interval"
+            android:summary="Clear the folder every X minutes"
+            android:inputType="number"
+            android:defaultValue="60"
+            android:dependency="active"
+            />
+        <CheckBoxPreference 
+            android:key="strict_interval"
+            android:title="Strict interval [unimplemented]"
+            android:summaryOn="Clear folder exactly on interval"
+            android:summaryOff="Clear folder loosely on interval"
+            android:defaultValue="false"
+            android:dependency="active"
+            />
+	</PreferenceCategory>
+    
     <PreferenceCategory
         android:title="Filter files">
         <EditTextPreference 
             android:key="delete_file_ext"
-            android:title="File extensions [unimplemented]"
-            android:summary="Delete only files with these extensions (seperate with ',')"
+            android:title="Delete only files of these extensions:"
+            android:summary="[unimplemented]"
+            android:dependency="active"
             />
         <EditTextPreference 
             android:key="delete_file_pattern"
-            android:title="Filename pattern [unimplemented]"
-            android:summary="Only delete files matching this pattern"
+            android:title="Detele files matching this pattern:"
+            android:summary="[unimplemented]"
+            android:dependency="active"
             />
     </PreferenceCategory>
     
-        
-        
-
 </PreferenceScreen>
