@@ -14,6 +14,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener, OnSharedPreferenceChangeListener
 {
@@ -44,6 +45,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	{
 		super.onResume();
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+		
+		pFolder.setSummary(pFolder.getText());
+		updateIntervalSummary();
 	}
 
 	// release the sharedPreferenceListener
@@ -66,9 +70,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		Intent folderIntent = new Intent(this, FileExplore.class);
 		pFolder.setIntent(folderIntent);
 		pFolder.setOnPreferenceClickListener(this);
-		
-		// pInterval
-		updateIntervalSummary();
 	}
 	
 	private void updateFolderPreference(Intent receivedIntent)
@@ -80,6 +81,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		
 		pFolder.setSummary(selectedFolderPath);
 		pFolder.setText(selectedFolderPath);
+		
+		Toast.makeText(this, "SET AS:\n\n"+pFolder.getText(), Toast.LENGTH_SHORT).show();
 	}
 
 	private void updateIntervalSummary()
@@ -148,16 +151,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	}
 
 
-	
 
-
-	
-
-
-	
-	
-	
-	
 	
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {

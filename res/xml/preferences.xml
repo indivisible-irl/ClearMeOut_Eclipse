@@ -60,7 +60,7 @@
             />
         <EditTextPreference 
             android:key="delete_file_pattern"
-            android:title="Detele files matching this pattern:"
+            android:title="Delete files matching this pattern:"
             android:summary="[unimplemented]"
             android:dependency="active"
             />
