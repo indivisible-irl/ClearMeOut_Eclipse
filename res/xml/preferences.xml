@@ -42,7 +42,7 @@
             />
         <CheckBoxPreference
             android:key="strict_interval"
-            android:title="Strict interval [unimplemented]"
+            android:title="Strict interval"
             android:summaryOn="Clear folder exactly on interval"
             android:summaryOff="Clear folder loosely on interval"
             android:defaultValue="false"
