@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <CheckBoxPreference
+        android:key="recursive_delete"
+        android:title="Recursive delete"
+        android:summary="Delete all sub folders too"
+        android:defaultValue="false"
+        />
+    <EditTextPreference
+        android:key="clear_interval"
+        android:title="Delete interval"
+        android:summary="How often to clear folder (mins)"
+        android:defaultValue="60"
+        />
+    <CheckBoxPreference 
+        android:key="strict_interval"
+        android:title="Strict interval [unimplemented]"
+        android:summaryOn="Clear folder exactly on interval"
+        android:summaryOff="Clear folder loosely on interval"
+        android:defaultValue="false"
+        />
+    <PreferenceCategory
+        android:title="Filter files">
+        <EditTextPreference 
+            android:key="delete_file_ext"
+            android:title="File extensions [unimplemented]"
+            android:summary="Delete only files with these extensions (seperate with ',')"
+            />
+        <EditTextPreference 
+            android:key="delete_file_pattern"
+            android:title="Filename pattern [unimplemented]"
+            android:summary="Only delete files matching this pattern"
+            />
+    </PreferenceCategory>
+    
+        
+        
+
+</PreferenceScreen>
