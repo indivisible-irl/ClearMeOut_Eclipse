@@ -15,6 +15,7 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+@SuppressWarnings("deprecation")	//FIXME comment this to view where to update to newer functionality
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener, OnSharedPreferenceChangeListener
 {
 

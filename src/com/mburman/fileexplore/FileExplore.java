@@ -22,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressWarnings("deprecation")	//FIXME comment this to view where to update to newer functionality
 public class FileExplore extends Activity 
 {
 

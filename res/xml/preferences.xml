@@ -20,8 +20,8 @@
             android:dependency="active"
             />
         <CheckBoxPreference
-            android:key="recursive_delete?"
-            android:title="Recursive delete"
+            android:key="recursive_delete"
+            android:title="Recursive delete?"
             android:summaryOn="Delete all sub folders too"
             android:summaryOff="Do not delete sub folders"
             android:defaultValue="false"

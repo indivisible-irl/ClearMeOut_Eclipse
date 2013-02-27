@@ -28,5 +28,13 @@
         android:text="Refill directory"
         />
     
+    <TextView android:id="@+id/start_tvFolderHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="15dp"
+        android:text=""
+        />
+    
 
 </LinearLayout>
