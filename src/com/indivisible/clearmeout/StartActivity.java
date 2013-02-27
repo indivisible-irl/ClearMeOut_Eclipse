@@ -1,5 +1,8 @@
 package com.indivisible.clearmeout;
 
+import java.io.File;
+import java.io.IOException;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
@@ -69,7 +72,16 @@ public class StartActivity extends Activity implements OnClickListener
 				break;
 				
 			case R.id.start_bFillDir:
-				refillFolder();
+				try
+				{
+					refillFolder();
+				}
+				catch (IOException e)
+				{
+					Log.e("StartActivity", "Error while populating test folder");
+					e.printStackTrace();
+					finish();
+				}
 				
 				break;
 		}
@@ -80,6 +92,9 @@ public class StartActivity extends Activity implements OnClickListener
 	
 	//// private methods
 	
+	/**
+	 * Initialise the layout's Views
+	 */
 	private void initViews()
 	{
 		tvFolderHint = (TextView) findViewById(R.id.start_tvFolderHint);
@@ -92,7 +107,9 @@ public class StartActivity extends Activity implements OnClickListener
 		bRefill.setOnClickListener(this);
 	}
 
-	
+	/**
+	 * Start the DeleteActivity to perform the folder clear (recursive depending on SharedPreference)
+	 */
 	private void performDelete()				//TODO move to new class
 	{
 //		Toast.makeText(this, "Folder:\n\n"+folder, Toast.LENGTH_SHORT).show();
@@ -101,9 +118,48 @@ public class StartActivity extends Activity implements OnClickListener
 		startActivity(deleteIntent);
 	}
 	
-	private void refillFolder()
+	/**
+	 * Method to populate the target folder with folders and files for testing purposes
+	 * @throws IOException
+	 */
+	private void refillFolder() throws IOException
 	{
+		File root = new File(folder);
 		
+		String[] newFolders = {"0", "1", "2"};
+		String[] newFiles = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"};
+		
+		File useFolder;
+		File newFile;
+		for (int i=0; i<newFiles.length; i++)
+		{
+			if ((i/3) < 1)
+			{
+				useFolder = new File(root, newFolders[0]);
+				useFolder.mkdir();
+				newFile = new File(useFolder, newFiles[i]+".txt");
+				newFile.createNewFile();
+			}
+			else if ((i/3) < 2)
+			{
+				useFolder = new File(root, newFolders[1]);
+				useFolder.mkdir();
+				newFile = new File(useFolder, newFiles[i]+".txt");
+				newFile.createNewFile();
+			}
+			else if ((i/3) < 3)
+			{
+				useFolder = new File(root, newFolders[2]);
+				useFolder.mkdir();
+				newFile = new File(useFolder, newFiles[i]+".txt");
+				newFile.createNewFile();
+			}
+			else
+			{
+				newFile = new File(root, newFiles[i]+".txt");
+				newFile.createNewFile();
+			}
+		}
 	}
 
 }

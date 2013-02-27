@@ -73,6 +73,7 @@ public class DeleteActivity extends Activity
 		if (file.isFile())
 		{
 			Log.d("DeleteActivity", "Del: " +file.getAbsolutePath());
+			file.delete();
 		}
 		else
 		{
@@ -84,9 +85,12 @@ public class DeleteActivity extends Activity
 			}
 			
 			if (file != root)
+			{
 				Log.d("DeleteActivity", "Del (F): " +file.getAbsolutePath());
+				file.delete();
+			}
 			else
-				Log.d("DeleteActivity", "Did not delete root dir");
+				Log.d("DeleteActivity", "Did not delete root dir: " +root.getAbsolutePath());
 		}
 		
 	}
@@ -115,6 +119,7 @@ public class DeleteActivity extends Activity
 		{
 			delFile = new File(root, file);
 			Log.d("DeleteActivity", "Del: " +delFile.getAbsolutePath());
+			delFile.delete();
 		}
 	}
 
