@@ -10,7 +10,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
@@ -136,17 +135,24 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		switch (requestCode)
+		if (resultCode == 1)
 		{
-		case folderIntentRequestCode:
-			Log.d("SettingsActivity", "ActivityResult recieved correctly");
+			switch (requestCode)
+			{
+			case folderIntentRequestCode:
+				Log.d("SettingsActivity", "ActivityResult recieved correctly");
+				
+				updateFolderPreference(data);
+				break;
 			
-			updateFolderPreference(data);
-			break;
-		
-		default:
-			Log.e("SettingsActivity", "onActivityResult: invalid request code - " +requestCode);
-			break;
+			default:
+				Log.e("SettingsActivity", "onActivityResult: invalid request code - " +requestCode);
+				break;
+			}
+		}
+		else
+		{
+			Log.w("SettingsActivity", "Received non 1 resultCode: " +resultCode);
 		}
 	}
 

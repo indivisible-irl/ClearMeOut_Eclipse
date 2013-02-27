@@ -40,7 +40,7 @@
             android:defaultValue="60"
             android:dependency="active"
             />
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="strict_interval"
             android:title="Strict interval [unimplemented]"
             android:summaryOn="Clear folder exactly on interval"

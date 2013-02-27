@@ -214,6 +214,10 @@ public class FileExplore extends Activity
 				}
 			});
 			break;
+			
+			default:
+				setResult(0, new Intent());
+				finish();
 		}
 		dialog = builder.show();
 		return dialog;
