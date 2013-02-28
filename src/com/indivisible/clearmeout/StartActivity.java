@@ -64,8 +64,8 @@ public class StartActivity extends Activity implements OnClickListener
 		switch (v.getId())
 		{
 			case R.id.start_bPref:
-				Log.d(TAG, "Opening SettingsActivity...");
-				Intent openPrefIntent = new Intent(this, SettingsActivity.class);
+				Log.d(TAG, "Opening PreferencesActivity...");
+				Intent openPrefIntent = new Intent(this, PreferencesActivity.class);
 				startActivity(openPrefIntent);
 				break;
 				

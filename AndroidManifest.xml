@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.indivisible.clearmeout.SettingsActivity"
+            android:name="com.indivisible.clearmeout.PreferencesActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

@@ -18,13 +18,13 @@ import android.view.inputmethod.InputMethodManager;
 
 
 @SuppressWarnings("deprecation")	//FIXME comment this to view where to update to newer functionality
-public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener, OnSharedPreferenceChangeListener
+public class PreferencesActivity extends PreferenceActivity implements OnPreferenceClickListener, OnSharedPreferenceChangeListener
 {
 
 	//// data
 	private static final int folderIntentRequestCode = 1;
 	private static final String strInterval = "Clear the folder every %d minutes";
-	private static final String TAG = "CMO:SettingsActivity";
+	private static final String TAG = "CMO:PreferencesActivity";
 	
 	private EditTextPreference pFolder;
 	private EditTextPreference pInterval;
