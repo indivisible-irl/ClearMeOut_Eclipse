@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class StartActivity extends Activity implements OnClickListener
 {
@@ -27,7 +26,9 @@ public class StartActivity extends Activity implements OnClickListener
 	private TextView tvFolderHint;
 	
 	private String folder;
-	private static final String textFolderHint = "Targetting:\n%s";
+	
+	private static String tag = "CMO:StartActivity";
+	private static final String textFolderHint = "Targetting folder:\n%s";
 	
 	
 	
@@ -62,7 +63,7 @@ public class StartActivity extends Activity implements OnClickListener
 		switch (v.getId())
 		{
 			case R.id.start_bPref:
-				Log.d("StartActivity", "Opening SettingsActivity...");
+				Log.d(tag, "Opening SettingsActivity...");
 				Intent openPrefIntent = new Intent(this, SettingsActivity.class);
 				startActivity(openPrefIntent);
 				break;
@@ -76,11 +77,11 @@ public class StartActivity extends Activity implements OnClickListener
 				try
 				{
 					refillFolder();
-					Toast.makeText(getApplicationContext(), "Repopulated target folder with spam for testing", Toast.LENGTH_SHORT).show();
+					Log.d(tag, "Repopulated target folder with spam for testing");
 				}
 				catch (IOException e)
 				{
-					Log.e("StartActivity", "Error while populating target folder");
+					Log.e(tag, "Error while populating target folder");
 					e.printStackTrace();
 					finish();
 				}
@@ -114,7 +115,7 @@ public class StartActivity extends Activity implements OnClickListener
 	 */
 	private void performDelete()				//TODO move to new class
 	{
-//		Toast.makeText(this, "Folder:\n\n"+folder, Toast.LENGTH_SHORT).show();
+		Log.d(tag, "Starting DeleteService...");
 		Intent deleteIntent = new Intent(this, DeleteService.class);
 		startService(deleteIntent);
 	}

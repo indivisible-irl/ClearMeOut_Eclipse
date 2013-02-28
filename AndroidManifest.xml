@@ -19,6 +19,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
+        
+        <!--  Broadcast Receivers  -->
         <receiver
             android:name="com.indivisible.clearmeout.OnBootReceiver">  
     		<intent-filter>  
@@ -26,19 +28,19 @@
     		</intent-filter>  
 		</receiver>
         
+        
+        <!--  Services  -->
         <service 
             android:name="com.indivisible.clearmeout.DeleteService"
             android:exported="false">
-            
         </service>
-        <activity
-            android:name="com.indivisible.clearmeout.SettingsActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.mburman.fileexplore.FileExplore"
-            android:label="@string/app_name" >
-        </activity>
+        <service
+            android:name="com.indivisible.clearmeout.UpdateAlarmsService"
+            android:exported="false" >
+        </service>
+        
+        
+        <!--  Activities  -->
         <activity
             android:name="com.indivisible.clearmeout.StartActivity"
             android:label="@string/app_name" >
@@ -48,9 +50,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.indivisible.clearmeout.OnBootActivity"
+            android:name="com.indivisible.clearmeout.SettingsActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.mburman.fileexplore.FileExplore"
+            android:label="@string/app_name" >
+        </activity>
+        
     </application>
 
 </manifest>

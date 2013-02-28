@@ -13,6 +13,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 @SuppressWarnings("deprecation")	//FIXME comment this to view where to update to newer functionality
@@ -58,6 +59,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
 	
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		
+		//TODO best here or in onPause()? Called too often up there or too rarely here?
+		Intent updateIntent = new Intent(getApplicationContext(), UpdateAlarmsService.class);
+		startService(updateIntent);
+	}
+	
 	
 	//// custom handling of some preferences
 
@@ -97,10 +108,12 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	@Override
 	public boolean onPreferenceClick(Preference preference)
 	{
+		// Folder preference
 		if (preference.equals(pFolder))
 		{
 			// disable the EditText dialog as we're using a file picking intent instead
 			pFolder.getDialog().dismiss();
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 			
 			// create the file picking intent
 			Intent folderIntent = new Intent(this, FileExplore.class);
@@ -108,6 +121,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 			
 			return true;
 		}
+		
+		// Interval Preference
 		else if (preference.equals(pInterval))
 		{
 			// update the preference summary with the new value
