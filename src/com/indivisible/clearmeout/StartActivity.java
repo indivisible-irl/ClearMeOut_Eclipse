@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StartActivity extends Activity implements OnClickListener
 {
@@ -75,10 +76,11 @@ public class StartActivity extends Activity implements OnClickListener
 				try
 				{
 					refillFolder();
+					Toast.makeText(getApplicationContext(), "Repopulated target folder with spam for testing", Toast.LENGTH_SHORT).show();
 				}
 				catch (IOException e)
 				{
-					Log.e("StartActivity", "Error while populating test folder");
+					Log.e("StartActivity", "Error while populating target folder");
 					e.printStackTrace();
 					finish();
 				}

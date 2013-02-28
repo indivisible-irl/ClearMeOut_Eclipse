@@ -3,14 +3,16 @@ package com.indivisible.clearmeout;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-public class DeleteService extends IntentService
+public class DeleteService extends Service
 {
 
 	//// data
@@ -20,18 +22,18 @@ public class DeleteService extends IntentService
 	private boolean recursiveDelete;
 	
 	
-	//// constructor
-	
-	public DeleteService() {
-		super("ClearMeOut_DeleteService");
-	}
+//	//// constructor
+//	
+//	public DeleteService() {
+//		super("ClearMeOut_DeleteService");
+//	}
 	
 	
 	
 	//// perform on intent calls for this service
 	
 	@Override
-	protected void onHandleIntent(Intent intent)
+	public void onCreate()
 	{		
 		// get needed settings
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -42,8 +44,8 @@ public class DeleteService extends IntentService
 		Toast.makeText(this, "ClearMeOut emptying folder:\n" +folder, Toast.LENGTH_SHORT).show();
 		performDelete();
 		
-		// no need to end service?
-//		stopSelf();
+		// end service
+		stopSelf();
 	}
 	
 	
@@ -132,6 +134,14 @@ public class DeleteService extends IntentService
 			Log.d("DeleteService", "Del: " +delFile.getAbsolutePath());
 			delFile.delete();
 		}
+	}
+
+
+	//// unused binder
+
+	@Override
+	public IBinder onBind(Intent arg0) {
+		return null;
 	}
 
 
