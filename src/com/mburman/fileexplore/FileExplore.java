@@ -32,7 +32,7 @@ public class FileExplore extends Activity
 	// Check if the first level of the directory structure is the one showing
 	private Boolean firstLvl = true;
 
-	private static final String TAG = "F_PATH";
+	private static final String TAG = "CMO:FileExplore";
 
 	private Item[] fileList;
 	private File path = new File(Environment.getExternalStorageDirectory() + "");
@@ -53,11 +53,22 @@ public class FileExplore extends Activity
 
 	}
 
+	
+	@Override
+	public void onBackPressed()
+	{
+		Log.d(TAG, "Back key press. finish()");
+    	Intent cancelIntent = new Intent();
+    	setResult(0, cancelIntent);
+        finish();
+	}
+	
+	
 	private void loadFileList() {
 		try {
 			path.mkdirs();
 		} catch (SecurityException e) {
-			Log.e(TAG, "unable to write on the sd card ");
+			Log.e(TAG, "unable to write to the sd card ");
 		}
 
 		// Checks whether path exists
@@ -150,6 +161,7 @@ public class FileExplore extends Activity
 		if (fileList == null) {
 			Log.e(TAG, "No files loaded");
 			dialog = builder.create();
+			
 			return dialog;
 		}
 
@@ -221,6 +233,20 @@ public class FileExplore extends Activity
 				finish();
 		}
 		dialog = builder.show();
+		
+		// listen for dismiss of dialog and finish() activity too
+		dialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+		{
+		    @Override
+			public void onCancel(DialogInterface dialog)
+		    {
+		    	Log.d(TAG, "Dialog dismissed. finish() activity - return 0");
+		    	Intent cancelIntent = new Intent();
+		    	setResult(0, cancelIntent);
+		        FileExplore.this.finish();
+		    }
+		});
+		
 		return dialog;
 	}
 	

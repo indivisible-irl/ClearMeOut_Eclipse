@@ -18,13 +18,13 @@ public class UpdateAlarmsService extends Service
 	private static final int minsToWaitAfterBoot = 1;
 	private static final String defaultInterval = "99";
 	
-	private static final String tag = "CMO:UpdateAlarmService";
+	private static final String TAG = "CMO:UpdateAlarmService";
 	
 	@Override
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.d(tag, "UpdateAlarmsService started...");
+		Log.d(TAG, "UpdateAlarmsService started...");
 		
 		// get the AlarmManager
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -35,7 +35,7 @@ public class UpdateAlarmsService extends Service
 		// end activity if not set to active
 		if (!prefs.getBoolean("active", false))
 		{
-			Log.d(tag, "Service not active. Removing scheduled alarms and stopping...");
+			Log.d(TAG, "Service not active. Removing scheduled alarms and stopping...");
 			
 			// recreate alarm to cancel it
 			Intent dupIntent = new Intent(this, DeleteService.class);
@@ -47,7 +47,7 @@ public class UpdateAlarmsService extends Service
 		}
 		else
 		{
-			Log.d(tag, "Service is active. Resetting Alarms...");
+			Log.d(TAG, "Service is active. Resetting Alarms...");
 			
 			// get the bits we need for setting the appropriate alarm based on prefs
 			int intervalPrefMinutes = Integer.parseInt(prefs.getString("clear_interval", defaultInterval));
@@ -63,12 +63,12 @@ public class UpdateAlarmsService extends Service
 			// set repeating alarm
 			if (strictInterval)
 			{
-				Log.d(tag, "Setting strict repeating alarm. Mins apart: " +intervalPrefMinutes);
+				Log.d(TAG, "Setting strict repeating alarm. Mins apart: " +intervalPrefMinutes);
 				am.setRepeating(AlarmManager.RTC_WAKEUP, firstTrigger.getTimeInMillis(), intervalPrefMillis, clearMeOutIntent);
 			}
 			else
 			{
-				Log.d(tag, "Setting loose repeating alarm. Mins apart: " +intervalPrefMinutes);
+				Log.d(TAG, "Setting loose repeating alarm. Mins apart: " +intervalPrefMinutes);
 				am.setRepeating(AlarmManager.RTC, firstTrigger.getTimeInMillis(), intervalPrefMillis, clearMeOutIntent);
 			}
 			

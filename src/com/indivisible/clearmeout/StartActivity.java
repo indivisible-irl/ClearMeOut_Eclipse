@@ -27,7 +27,7 @@ public class StartActivity extends Activity implements OnClickListener
 	
 	private String folder;
 	
-	private static String tag = "CMO:StartActivity";
+	private static String TAG = "CMO:StartActivity";
 	private static final String textFolderHint = "Targetting folder:\n%s";
 	
 	
@@ -63,7 +63,7 @@ public class StartActivity extends Activity implements OnClickListener
 		switch (v.getId())
 		{
 			case R.id.start_bPref:
-				Log.d(tag, "Opening SettingsActivity...");
+				Log.d(TAG, "Opening SettingsActivity...");
 				Intent openPrefIntent = new Intent(this, SettingsActivity.class);
 				startActivity(openPrefIntent);
 				break;
@@ -77,11 +77,11 @@ public class StartActivity extends Activity implements OnClickListener
 				try
 				{
 					refillFolder();
-					Log.d(tag, "Repopulated target folder with spam for testing");
+					Log.d(TAG, "Repopulated target folder with spam for testing");
 				}
 				catch (IOException e)
 				{
-					Log.e(tag, "Error while populating target folder");
+					Log.e(TAG, "Error while populating target folder");
 					e.printStackTrace();
 					finish();
 				}
@@ -115,7 +115,7 @@ public class StartActivity extends Activity implements OnClickListener
 	 */
 	private void performDelete()				//TODO move to new class
 	{
-		Log.d(tag, "Starting DeleteService...");
+		Log.d(TAG, "Starting DeleteService...");
 		Intent deleteIntent = new Intent(this, DeleteService.class);
 		startService(deleteIntent);
 	}

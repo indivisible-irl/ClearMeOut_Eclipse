@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.mburman.fileexplore.FileExplore;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -13,8 +14,8 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+
 
 @SuppressWarnings("deprecation")	//FIXME comment this to view where to update to newer functionality
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener, OnSharedPreferenceChangeListener
@@ -23,6 +24,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	//// data
 	private static final int folderIntentRequestCode = 1;
 	private static final String strInterval = "Clear the folder every %d minutes";
+	private static final String TAG = "CMO:SettingsActivity";
 	
 	private EditTextPreference pFolder;
 	private EditTextPreference pInterval;
@@ -93,7 +95,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		pFolder.setSummary(selectedFolderPath);
 		pFolder.setText(selectedFolderPath);
 		
-		Toast.makeText(this, "SET AS:\n\n"+pFolder.getText(), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, "SET AS:\n\n"+pFolder.getText(), Toast.LENGTH_SHORT).show();
 	}
 
 	private void updateIntervalSummary()
@@ -111,9 +113,11 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		// Folder preference
 		if (preference.equals(pFolder))
 		{
-			// disable the EditText dialog as we're using a file picking intent instead
+			// disable the EditText dialog (and soft keyboard) as we're using a file picking intent instead
+			//TODO prob better to disable the pref opening a dialog at all
+			InputMethodManager keyboard = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		    keyboard.hideSoftInputFromInputMethod(pFolder.getEditText().getWindowToken(), 0);
 			pFolder.getDialog().dismiss();
-			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 			
 			// create the file picking intent
 			Intent folderIntent = new Intent(this, FileExplore.class);
@@ -156,19 +160,19 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 			switch (requestCode)
 			{
 			case folderIntentRequestCode:
-				Log.d("SettingsActivity", "ActivityResult recieved correctly");
+				Log.d(TAG, "ActivityResult recieved correctly");
 				
 				updateFolderPreference(data);
 				break;
 			
 			default:
-				Log.e("SettingsActivity", "onActivityResult: invalid request code - " +requestCode);
+				Log.e(TAG, "onActivityResult: invalid request code - " +requestCode);
 				break;
 			}
 		}
 		else
 		{
-			Log.w("SettingsActivity", "Received non 1 resultCode: " +resultCode);
+			Log.w(TAG, "Received non 1 resultCode: " +resultCode);
 		}
 	}
 
