@@ -83,6 +83,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		Intent folderIntent = new Intent(this, FileExplore.class);
 		pFolder.setIntent(folderIntent);
 		pFolder.setOnPreferenceClickListener(this);
+		
 	}
 	
 	private void updateFolderPreference(Intent receivedIntent)
@@ -115,8 +116,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		{
 			// disable the EditText dialog (and soft keyboard) as we're using a file picking intent instead
 			//TODO prob better to disable the pref opening a dialog at all
-			InputMethodManager keyboard = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		    keyboard.hideSoftInputFromInputMethod(pFolder.getEditText().getWindowToken(), 0);
+			InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+//		    imm.hideSoftInputFromInputMethod(pFolder.getEditText().getApplicationWindowToken(), 0);
 			pFolder.getDialog().dismiss();
 			
 			// create the file picking intent

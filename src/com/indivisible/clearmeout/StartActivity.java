@@ -27,8 +27,9 @@ public class StartActivity extends Activity implements OnClickListener
 	
 	private String folder;
 	
-	private static String TAG = "CMO:StartActivity";
-	private static final String textFolderHint = "Targetting folder:\n%s";
+	private static final String TAG = "CMO:StartActivity";
+	private static final String key_folder = "folder";
+	private static final String textFolderHint = "Targetting folder:\n    %s";
 	
 	
 	
@@ -49,7 +50,7 @@ public class StartActivity extends Activity implements OnClickListener
 		super.onResume();
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		folder = prefs.getString("folder", "");
+		folder = prefs.getString(key_folder, "---");
 		
 		tvFolderHint.setText(String.format(textFolderHint, folder));
 	}
@@ -70,7 +71,6 @@ public class StartActivity extends Activity implements OnClickListener
 				
 			case R.id.start_bDelete:
 				performDelete();
-				
 				break;
 				
 			case R.id.start_bFillDir:
@@ -108,6 +108,9 @@ public class StartActivity extends Activity implements OnClickListener
 		bPref.setOnClickListener(this);
 		bDelete.setOnClickListener(this);
 		bRefill.setOnClickListener(this);
+		
+		// remove the view from release versions
+		bRefill.setVisibility(View.GONE);
 	}
 
 	/**

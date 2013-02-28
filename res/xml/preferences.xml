@@ -4,8 +4,8 @@
     <CheckBoxPreference
         android:key="active"
         android:title="Enable service"
-        android:summaryOn="Service is active"
-        android:summaryOff="Service is inactive"
+        android:summaryOn="Service is now active"
+        android:summaryOff="Service is currently inactive"
         android:defaultValue="false"
         android:disableDependentsState="false"
         />
@@ -17,6 +17,7 @@
             android:key="folder"
             android:title="Select folder to clear:"
             android:summary="[Folder path]"
+            android:defaultValue="---"
             android:dependency="active"
             />
         <CheckBoxPreference

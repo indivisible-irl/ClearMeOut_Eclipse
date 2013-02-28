@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 @SuppressWarnings("deprecation")	//FIXME comment this to view where to update to newer functionality
 public class FileExplore extends Activity 
@@ -42,7 +42,8 @@ public class FileExplore extends Activity
 	ListAdapter adapter;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 
 		super.onCreate(savedInstanceState);
 
@@ -64,58 +65,73 @@ public class FileExplore extends Activity
 	}
 	
 	
-	private void loadFileList() {
-		try {
+	private void loadFileList()
+	{
+		try
+		{
 			path.mkdirs();
-		} catch (SecurityException e) {
+		}
+		catch (SecurityException e)
+		{
 			Log.e(TAG, "unable to write to the sd card ");
 		}
 
 		// Checks whether path exists
-		if (path.exists()) {
-			FilenameFilter filter = new FilenameFilter() {
+		if (path.exists())
+		{
+			FilenameFilter filter = new FilenameFilter()
+			{
 				@Override
-				public boolean accept(File dir, String filename) {
+				public boolean accept(File dir, String filename)
+				{
 					File sel = new File(dir, filename);
 					// Filters based on whether the file is hidden or not
 					return (sel.isFile() || sel.isDirectory())
 							&& !sel.isHidden();
-
 				}
 			};
 
 			String[] fList = path.list(filter);
 			fileList = new Item[fList.length];
-			for (int i = 0; i < fList.length; i++) {
+			for (int i = 0; i < fList.length; i++)
+			{
 				fileList[i] = new Item(fList[i], R.drawable.file_icon);
 
 				// Convert into file path
 				File sel = new File(path, fList[i]);
 
 				// Set drawables
-				if (sel.isDirectory()) {
+				if (sel.isDirectory())
+				{
 					fileList[i].icon = R.drawable.directory_icon;
 					Log.d("DIRECTORY", fileList[i].file);
-				} else {
+				}
+				else
+				{
 					Log.d("FILE", fileList[i].file);
 				}
 			}
 
-			if (!firstLvl) {
+			if (!firstLvl)
+			{
 				Item temp[] = new Item[fileList.length + 1];
-				for (int i = 0; i < fileList.length; i++) {
+				for (int i = 0; i < fileList.length; i++)
+				{
 					temp[i + 1] = fileList[i];
 				}
 				temp[0] = new Item("Up", R.drawable.directory_up);
 				fileList = temp;
 			}
-		} else {
+		}
+		else
+		{
 			Log.e(TAG, "path does not exist");
 		}
 
 		adapter = new ArrayAdapter<Item>(this,
 				android.R.layout.select_dialog_item, android.R.id.text1,
-				fileList) {
+				fileList)
+		{
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				// creates view
@@ -138,42 +154,51 @@ public class FileExplore extends Activity
 
 	}
 
-	private class Item {
+	private class Item
+	{
 		public String file;
 		public int icon;
 
-		public Item(String file, Integer icon) {
+		public Item(String file, Integer icon)
+		{
 			this.file = file;
 			this.icon = icon;
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return file;
 		}
 	}
 
 	@Override
-	protected Dialog onCreateDialog(int id) {
+	protected Dialog onCreateDialog(int id)
+	{
 		Dialog dialog = null;
 		AlertDialog.Builder builder = new Builder(this);
 
-		if (fileList == null) {
+		if (fileList == null)
+		{
 			Log.e(TAG, "No files loaded");
 			dialog = builder.create();
 			
 			return dialog;
 		}
 
-		switch (id) {
+		switch (id)
+		{
 		case DIALOG_LOAD_FILE:
 			builder.setTitle("Choose your file");
-			builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+			builder.setAdapter(adapter, new DialogInterface.OnClickListener()
+			{
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
+				public void onClick(DialogInterface dialog, int which)
+				{
 					chosenFile = fileList[which].file;
 					File sel = new File(path + "/" + chosenFile);
-					if (sel.isDirectory()) {
+					if (sel.isDirectory())
+					{
 						firstLvl = false;
 
 						// Adds chosen directory to list
@@ -190,7 +215,8 @@ public class FileExplore extends Activity
 					}
 
 					// Checks if 'up' was clicked
-					else if (chosenFile.equalsIgnoreCase("up") && !sel.exists()) {
+					else if (chosenFile.equalsIgnoreCase("up") && !sel.exists())
+					{
 
 						// present directory removed from list
 						String s = str.remove(str.size() - 1);
@@ -202,7 +228,8 @@ public class FileExplore extends Activity
 
 						// if there are no more directories in the list, then
 						// its the first level
-						if (str.isEmpty()) {
+						if (str.isEmpty())
+						{
 							firstLvl = true;
 						}
 						loadFileList();
@@ -213,11 +240,12 @@ public class FileExplore extends Activity
 
 					}
 					// File picked
-					else {
+					else
+					{
 						Log.d("FileExplore", "File selected: " +sel.getAbsolutePath());
-						toastPath(sel);
-						// Perform action with file picked
+//						toastPath(sel);
 						
+						// Perform action with file picked
 						Intent resultIntent = new Intent();
 						resultIntent.putExtra("filepath", sel.getAbsolutePath());
 						setResult(1, resultIntent);
@@ -228,10 +256,11 @@ public class FileExplore extends Activity
 			});
 			break;
 			
-			default:
-				setResult(0, new Intent());
-				finish();
+		default:
+			setResult(0, new Intent());
+			finish();
 		}
+		
 		dialog = builder.show();
 		
 		// listen for dismiss of dialog and finish() activity too
@@ -251,9 +280,9 @@ public class FileExplore extends Activity
 	}
 	
 	
-	private void toastPath(File f)
-	{
-		Toast.makeText(this, f.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-	}
+//	private void toastPath(File f)
+//	{
+//		Toast.makeText(this, f.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+//	}
 
 }

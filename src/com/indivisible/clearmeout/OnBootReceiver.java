@@ -14,7 +14,7 @@ public class OnBootReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent)
 	{
 //		Toast.makeText(context, "Received boot complete\n\n" +context.getPackageName(), Toast.LENGTH_SHORT).show();
-		Log.d(TAG, "BOOT_COMPLETE received, triggering service...");
+		Log.d(TAG, "BOOT_COMPLETE received, triggering UpdateAlarmsService...");
 		Intent runClearMeOut = new Intent(context, UpdateAlarmsService.class);
 		context.startService(runClearMeOut);
 	}

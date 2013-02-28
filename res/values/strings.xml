@@ -3,5 +3,16 @@
 
     <string name="app_name">ClearMeOut</string>
     <string name="action_settings">Settings</string>
+    
+    
+    
+    <string name="quick_descrip">
+        Set folder to clear in \'Preferences\'. Frequency should also be set there too.
+        \n\nCURRENT LIMITATION: The folder you want to select must have a file inside it. Select any file to choose its parent folder as the target.\n(I\'ll fix this soon)
+        \n\nUsing a \'Recursive delete\' will delete a folder\'s contents AND ALL sub-folders too.\nUncheck this option to only delete files directly within the target folder.
+        \n\nUsing a \'Strict interval\' means that the folder will be cleared exacly when you set it for.\nThis possible advantage has the disadvantage of using up some small amount of extra battery in some situations.\nIf this is an issue for you disable this option.
+        \n\nThe service\/schedule is set on enabling (or unset on diasabling) the service in \'Preferences\'.\nTry toggling this setting if it doesn\'t seem to be working.
+        \n\nIf you ONLY want to manualy clear a folder:\n- activate the service in \'Preferences\'\n- set the target folder\n- deactivate the service\n- hit the \'ClearMeOut Now\' button when desired\n\nAs long as a folder is set the \'ClearMeOut Now\' button will work. 
+    </string>
 
 </resources>

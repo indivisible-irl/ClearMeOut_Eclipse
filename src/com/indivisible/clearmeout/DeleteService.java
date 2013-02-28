@@ -6,10 +6,10 @@ import java.io.FilenameFilter;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class DeleteService extends Service
 {
@@ -20,17 +20,10 @@ public class DeleteService extends Service
 	private File root;
 	private boolean recursiveDelete;
 	
-	private static final String tag = "CMO:DeleteService";
+	private static final String TAG = "CMO:DeleteService";
 	private static final String key_active = "active";
 	private static final String key_recursive = "recursive_delete";
 	private static final String key_folder = "folder";
-	
-	
-//	//// constructor
-//	
-//	public DeleteService() {
-//		super("ClearMeOut_DeleteService");
-//	}
 	
 	
 	
@@ -40,25 +33,35 @@ public class DeleteService extends Service
 	public void onCreate()
 	{
 		super.onCreate();
-		Log.d(tag, "DeleteService started...");
+		Log.d(TAG, "DeleteService started...");
 		
 		// get needed settings
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		boolean active = prefs.getBoolean(key_active, false);
+
+		folder = prefs.getString(key_folder, "---");
 		
-		// ensure the service should be running (in case of accidental non update of alarms
-		if (!active)
+		if (folder.equals("---"))
 		{
-			Log.w(tag, "ClearMeOut not active, this service should not have been started");
+			Log.w(TAG, "Default folder value found. Shutting down (and disabling service)");
+			
+			// set service preference to false
+			Editor edit = prefs.edit();
+			edit.putBoolean(key_active, false);
+			edit.commit();
+			
+			// run UpdateAlarmsService to trigger disable
+			Intent disableServiceIntent = new Intent(getApplicationContext(), UpdateAlarmsService.class);
+			startService(disableServiceIntent);
 			stopSelf();
 		}
 		else
 		{
-			folder = prefs.getString(key_folder, "");
+			// check and set recursive or non-recursive
 			recursiveDelete = prefs.getBoolean(key_recursive, false);
 			
 			// notify user and perform delete
-			Toast.makeText(this, "ClearMeOut emptying folder:\n" +folder, Toast.LENGTH_SHORT).show();
+//			Toast.makeText(this, "ClearMeOut emptying folder:\n" +folder, Toast.LENGTH_SHORT).show();
+			Log.d(TAG, "ClearMeOut emptying folder:\n" +folder);
 			performDelete();
 			
 			// end service
@@ -75,23 +78,23 @@ public class DeleteService extends Service
 		root = new File(folder);
 		if (root.exists() && root.canWrite())
 		{
-			Log.d(tag, "Can write to: " +root.getAbsolutePath());
+			Log.d(TAG, "Can write to: " +root.getAbsolutePath());
 		}
 		else
 		{
-			Log.e(tag, "Cannot perform recursive delete: " +root.getAbsolutePath());
+			Log.e(TAG, "Cannot perform recursive delete: " +root.getAbsolutePath());
 //			finish();
 		}
 		
 		
 		if (recursiveDelete)
 		{
-			Log.d(tag, "Performing recursive delete on " +root.getAbsolutePath());
+			Log.d(TAG, "Performing recursive delete on " +root.getAbsolutePath());
 			performRecursiveDelete(root);
 		}
 		else
 		{
-			Log.d(tag, "Performing non-recursive delete on " +root.getAbsolutePath());
+			Log.d(TAG, "Performing non-recursive delete on " +root.getAbsolutePath());
 			performNonRecursiveDelete();
 		}
 	}
@@ -105,7 +108,7 @@ public class DeleteService extends Service
 	{
 		if (file.isFile())
 		{
-			Log.d(tag, "Del: " +file.getAbsolutePath());
+			Log.d(TAG, "Del: " +file.getAbsolutePath());
 			file.delete();
 		}
 		else
@@ -119,11 +122,11 @@ public class DeleteService extends Service
 			
 			if (file != root)
 			{
-				Log.d(tag, "Del (F): " +file.getAbsolutePath());
+				Log.d(TAG, "Del (F): " +file.getAbsolutePath());
 				file.delete();
 			}
 			else
-				Log.d(tag, "Did not delete root dir: " +root.getAbsolutePath());
+				Log.d(TAG, "Did not delete root dir: " +root.getAbsolutePath());
 		}
 		
 	}
@@ -148,11 +151,14 @@ public class DeleteService extends Service
 		
 		String[] files = root.list(fileOnlyFilter);
 		File delFile;
-		for (String file : files)
+		if (files != null)
 		{
-			delFile = new File(root, file);
-			Log.d(tag, "Del: " +delFile.getAbsolutePath());
-			delFile.delete();
+			for (String file : files)
+			{
+				delFile = new File(root, file);
+				Log.d(TAG, "Del: " +delFile.getAbsolutePath());
+				delFile.delete();
+			}
 		}
 	}
 
