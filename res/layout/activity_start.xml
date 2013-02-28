@@ -11,21 +11,21 @@
 
     <Button android:id="@+id/start_bPref"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:gravity="center"
         android:text="Preferences"
         />
     <Button android:id="@+id/start_bDelete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:gravity="center"
-        android:text="Delete"
+        android:text="ClearMeOut now"
         />
     <Button android:id="@+id/start_bFillDir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Refill directory"
+        android:text="Refill directory (testing)"
         />
     
     <TextView android:id="@+id/start_tvFolderHint"

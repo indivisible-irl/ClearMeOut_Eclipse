@@ -3,37 +3,47 @@ package com.indivisible.clearmeout;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.app.Activity;
+import android.widget.Toast;
+import android.app.IntentService;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
-public class DeleteActivity extends Activity
+public class DeleteService extends IntentService
 {
 
+	//// data
+	
 	private String folder;
 	private File root;
 	private boolean recursiveDelete;
 	
 	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_delete);
+	//// constructor
+	
+	public DeleteService() {
+		super("ClearMeOut_DeleteService");
 	}
 	
+	
+	
+	//// perform on intent calls for this service
+	
 	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	protected void onHandleIntent(Intent intent)
+	{		
+		// get needed settings
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		folder = prefs.getString("folder", "");
 		recursiveDelete = prefs.getBoolean("recursive_delete", false);
 		
+		// notify user and perform delete
+		Toast.makeText(this, "ClearMeOut emptying folder:\n" +folder, Toast.LENGTH_SHORT).show();
 		performDelete();
-		finish();
+		
+		// no need to end service?
+//		stopSelf();
 	}
 	
 	
@@ -45,12 +55,12 @@ public class DeleteActivity extends Activity
 		root = new File(folder);
 		if (root.exists() && root.canWrite())
 		{
-			Log.d("DeleteActivity", "Can write to: " +root.getAbsolutePath());
+			Log.d("DeleteService", "Can write to: " +root.getAbsolutePath());
 		}
 		else
 		{
-			Log.e("DeleteActivity", "Cannot perform recursive delete: " +root.getAbsolutePath());
-			finish();
+			Log.e("DeleteService", "Cannot perform recursive delete: " +root.getAbsolutePath());
+//			finish();
 		}
 		
 		
@@ -63,7 +73,8 @@ public class DeleteActivity extends Activity
 			performNonRecursiveDelete();
 		}
 	}
-	
+
+
 	/**
 	 * Delete all files AND folders from a directory
 	 * @param file
@@ -72,7 +83,7 @@ public class DeleteActivity extends Activity
 	{
 		if (file.isFile())
 		{
-			Log.d("DeleteActivity", "Del: " +file.getAbsolutePath());
+			Log.d("DeleteService", "Del: " +file.getAbsolutePath());
 			file.delete();
 		}
 		else
@@ -86,14 +97,15 @@ public class DeleteActivity extends Activity
 			
 			if (file != root)
 			{
-				Log.d("DeleteActivity", "Del (F): " +file.getAbsolutePath());
+				Log.d("DeleteService", "Del (F): " +file.getAbsolutePath());
 				file.delete();
 			}
 			else
-				Log.d("DeleteActivity", "Did not delete root dir: " +root.getAbsolutePath());
+				Log.d("DeleteService", "Did not delete root dir: " +root.getAbsolutePath());
 		}
 		
 	}
+	
 	
 	/**
 	 * Delete ONLY the files from a folder leaving all sub-folders untouched
@@ -102,7 +114,6 @@ public class DeleteActivity extends Activity
 	{
 		FilenameFilter filter = new FilenameFilter()
 		{
-			
 			@Override
 			public boolean accept(File dir, String filename)
 			{
@@ -118,7 +129,7 @@ public class DeleteActivity extends Activity
 		for (String file : files)
 		{
 			delFile = new File(root, file);
-			Log.d("DeleteActivity", "Del: " +delFile.getAbsolutePath());
+			Log.d("DeleteService", "Del: " +delFile.getAbsolutePath());
 			delFile.delete();
 		}
 	}

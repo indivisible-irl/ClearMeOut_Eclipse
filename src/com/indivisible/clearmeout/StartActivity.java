@@ -108,14 +108,13 @@ public class StartActivity extends Activity implements OnClickListener
 	}
 
 	/**
-	 * Start the DeleteActivity to perform the folder clear (recursive depending on SharedPreference)
+	 * Start the DeleteService to perform the folder clear (recursive depending on SharedPreference)
 	 */
 	private void performDelete()				//TODO move to new class
 	{
 //		Toast.makeText(this, "Folder:\n\n"+folder, Toast.LENGTH_SHORT).show();
-		Intent deleteIntent = new Intent(this, DeleteActivity.class);
-		deleteIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		startActivity(deleteIntent);
+		Intent deleteIntent = new Intent(this, DeleteService.class);
+		startService(deleteIntent);
 	}
 	
 	/**

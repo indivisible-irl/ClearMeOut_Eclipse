@@ -41,7 +41,7 @@ public class OnBootActivity extends Activity
 		
 		// set up the activity calls
 		Intent deleteIntent = new Intent(this, DeleteService.class);
-		PendingIntent clearMeOutIntent = PendingIntent.getActivity(this, alarmId, deleteIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent clearMeOutIntent = PendingIntent.getService(this, alarmId, deleteIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 		// set repeating alarm
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
