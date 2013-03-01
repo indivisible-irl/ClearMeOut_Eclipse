@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    
-    <PreferenceCategory 
-        android:title="@string/pref_cat_service"
-        >
-    <CheckBoxPreference
-        android:key="@string/pref_key_service_active"
-        android:title="@string/pref_title_service_active"
-        android:summaryOn="@string/pref_summOn_service_active"
-        android:summaryOff="@string/pref_summOff_service_active"
-        android:defaultValue="false"
-        android:disableDependentsState="false"
-        />
-    </PreferenceCategory>
+
     
     <PreferenceCategory 
         android:title="@string/pref_cat_delete"
@@ -31,6 +19,7 @@
             android:summaryOff="@string/pref_summOff_use_recursive_delete"
             android:defaultValue="false"
             android:dependency="@string/pref_key_target_folder"
+            android:disableDependentsState="false"
             />
         <CheckBoxPreference 
             android:key="@string/pref_key_delete_folders"
@@ -38,7 +27,7 @@
             android:summaryOn="@string/pref_summOn_delete_folders"
             android:summaryOff="@string/pref_summOff_delete_folders"
             android:defaultValue="false"
-            android:dependency="@string/pref_key_target_folder"
+            android:dependency="@string/pref_key_use_recursive_delete"
             />
         <CheckBoxPreference 
             android:key="@string/pref_key_notify_on_delete"
@@ -47,6 +36,19 @@
             android:summaryOff="@string/pref_summOff_notify_on_delete"
             android:defaultValue="false"
             />
+    </PreferenceCategory>
+    
+     <PreferenceCategory 
+        android:title="@string/pref_cat_service"
+        >
+    <CheckBoxPreference
+        android:key="@string/pref_key_service_active"
+        android:title="@string/pref_title_service_active"
+        android:summaryOn="@string/pref_summOn_service_active"
+        android:summaryOff="@string/pref_summOff_service_active"
+        android:defaultValue="false"
+        android:disableDependentsState="false"
+        />
     </PreferenceCategory>
     
     <PreferenceCategory 
@@ -104,14 +106,14 @@
             android:summaryOn="@string/pref_summOn_delete_files_matching_extension"
             android:summaryOff="@string/pref_summOff_delete_files_matching_extension"
             android:defaultValue="true"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_key_use_filter_extensions"
             />
         <EditTextPreference 
             android:key="@string/pref_key_filter_extensions"
             android:title="@string/pref_title_filter_extensions"
             android:summary="@string/pref_summ_filter_extensions"
             android:defaultValue="@string/pref_default_filter_extensions"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_key_use_filter_extensions"
             />
         <!--  filter by pattern  -->
         <CheckBoxPreference 
@@ -128,14 +130,14 @@
             android:summaryOn="@string/pref_summOn_delete_files_matching_pattern"
             android:summaryOff="@string/pref_summOff_delete_files_matching_pattern"
             android:defaultValue="true"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_key_use_filter_pattern"
             />
         <EditTextPreference 
             android:key="@string/pref_key_filter_pattern"
             android:title="@string/pref_title_filter_pattern"
             android:summary="@string/pref_summ_filter_pattern"
             android:defaultValue="@string/pref_default_filter_pattern"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_key_use_filter_pattern"
             />
     </PreferenceCategory>
     

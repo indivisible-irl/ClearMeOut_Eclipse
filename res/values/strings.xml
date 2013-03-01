@@ -10,7 +10,7 @@
     <!--  Preferences Strings  -->
         
         <!-- category titles -->
-        <string name="pref_cat_service">Background Service</string>
+        <string name="pref_cat_service">Scheduled delete service</string>
         <string name="pref_cat_delete">Delete settings</string>
         <string name="pref_cat_interval">Schedule settings</string>
         <string name="pref_cat_filters">Filter settings [unimplemented]</string>
@@ -30,9 +30,9 @@
         
             <!-- target_folder -->
             <string name="pref_key_target_folder">target_folder</string>
-            <string name="pref_title_target_folder">Select folder to clear:</string>
+            <string name="pref_title_target_folder">Select folder to clear</string>
             <string name="pref_summ_target_folder">[Folder path]</string>
-            <string name="pref_default_target_folder">[none]</string>
+            <string name="pref_default_target_folder">[click here to set]</string>
     
         <!-- delete settings -->
             <!-- recursive_delete -->
@@ -88,7 +88,7 @@
             <!-- filter_extensions -->                        <!--  currently EditText, future String array with list/grid view??  -->
             <string name="pref_key_filter_extensions">filter_ext_choices</string>
             <string name="pref_title_filter_extensions">File extensions</string>
-            <string name="pref_summ_filter_extensions">[unimplemented]</string>
+            <string name="pref_summ_filter_extensions">Separate multiple extensions with commas \',\'</string>
             <string name="pref_default_filter_extensions">[none]</string>
     
         <!-- patterns filter -->
@@ -96,7 +96,7 @@
             <string name="pref_key_use_filter_pattern">use_filter_pattern</string>
             <string name="pref_title_use_filter_pattern">Filter by pattern</string>
             <string name="pref_summOn_use_filter_pattern">Use file pattern filter</string>
-            <string name="pref_summOff_use_filter_pattern">Do not use file pattern filter</string>
+            <string name="pref_summOff_use_filter_pattern">Do not filter by file pattern</string>
     
             <!-- keep_files_matching_pattern -->
             <string name="pref_key_delete_files_matching_pattern">delete_files_matching_pattern</string>

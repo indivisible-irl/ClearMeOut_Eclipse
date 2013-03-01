@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -21,12 +22,23 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 {
 
 	//// data
-	private static final String strInterval = "Clear the folder every %d minutes";
+	private static final String strInterval = "Clear the folder every %d minutes";   //TODO get string res
 	private static final String TAG = "CMO:PreferencesActivity";
 	private final int REQUEST_CODE_PICK_DIR = 1;
 	
-	private EditTextPreference pFolder;
-	private EditTextPreference pInterval;
+	// preferences
+	private CheckBoxPreference pCbServiceActive;
+	
+	private EditTextPreference pEtFolder;
+	private CheckBoxPreference pCbRecursiveDelete, pCbDeleteFolders, pCbNotifyOnDelete;
+	
+	private CheckBoxPreference pCbIntervalType;										//TODO intervalType --> list
+	private CheckBoxPreference pCbStrictInterval;
+	private EditTextPreference pEtDailyTime, pEtIntervalMinutes;
+	
+	private CheckBoxPreference pCbUseExtensionFilter, pCbUsePatternFilter;
+	private CheckBoxPreference pCbDeleteExtensionMatches, pCbDeletePatternMatches;
+	private EditTextPreference pEtExtensions, pEtPattern;
 	
 	private String pFolderKey;
 	private String pIntervalKey;
@@ -88,6 +100,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 		pFolder.setIntent(folderIntent);
 		pFolder.setOnPreferenceClickListener(this);
 		
+		//TODO disable filter prefs until implemented
 	}
 	
 	private void updateFolderPreference(Intent receivedIntent)
