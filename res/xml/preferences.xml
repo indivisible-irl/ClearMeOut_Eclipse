@@ -1,69 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     
+    <PreferenceCategory 
+        android:title="@string/pref_cat_service"
+        >
     <CheckBoxPreference
-        android:key="active"
-        android:title="Enable service"
-        android:summaryOn="Service is now active"
-        android:summaryOff="Service is currently inactive"
+        android:key="@string/pref_key_service_active"
+        android:title="@string/pref_title_service_active"
+        android:summaryOn="@string/pref_summOn_service_active"
+        android:summaryOff="@string/pref_summOff_service_active"
         android:defaultValue="false"
         android:disableDependentsState="false"
         />
+    </PreferenceCategory>
     
     <PreferenceCategory 
-        android:title="Delete settings"
+        android:title="@string/pref_cat_delete"
         >
         <EditTextPreference 
-            android:key="folder"
-            android:title="Select folder to clear:"
-            android:summary="[Folder path]"
-            android:defaultValue="---"
-            android:dependency="active"
+            android:key="@string/pref_key_target_folder"
+            android:title="@string/pref_title_target_folder"
+            android:summary="@string/pref_summ_target_folder"
+            android:defaultValue="@string/pref_default_target_folder"
+            android:disableDependentsState="@string/pref_default_target_folder"
             />
         <CheckBoxPreference
-            android:key="recursive_delete"
-            android:title="Recursive delete?"
-            android:summaryOn="Delete all sub folders too"
-            android:summaryOff="Do not delete sub folders"
+            android:key="@string/pref_key_use_recursive_delete"
+            android:title="@string/pref_title_use_recursive_delete"
+            android:summaryOn="@string/pref_summOn_use_recursive_delete"
+            android:summaryOff="@string/pref_summOff_use_recursive_delete"
             android:defaultValue="false"
-            android:dependency="active"
+            android:dependency="@string/pref_key_target_folder"
+            />
+        <CheckBoxPreference 
+            android:key="@string/pref_key_delete_folders"
+            android:title="@string/pref_title_delete_folders"
+            android:summaryOn="@string/pref_summOn_delete_folders"
+            android:summaryOff="@string/pref_summOff_delete_folders"
+            android:defaultValue="false"
+            android:dependency="@string/pref_key_target_folder"
+            />
+        <CheckBoxPreference 
+            android:key="@string/pref_key_notify_on_delete"
+            android:title="@string/pref_title_notify_on_delete"
+            android:summaryOn="@string/pref_summOn_notify_on_delete"
+            android:summaryOff="@string/pref_summOff_notify_on_delete"
+            android:defaultValue="false"
             />
     </PreferenceCategory>
     
     <PreferenceCategory 
-        android:title="Interval settings"
+        android:title="@string/pref_cat_interval"
         >
+        <CheckBoxPreference 
+            android:key="@string/pref_key_interval_type"
+            android:title="@string/pref_title_interval_type"
+            android:summaryOn="@string/pref_summOn_interval_type"
+            android:summaryOff="@string/pref_summOff_interval_type"
+            android:defaultValue="true"
+            android:dependency="@string/pref_key_service_active"
+            />
+        <EditTextPreference 
+            android:key="@string/pref_key_daily_at"
+            android:title="@string/pref_title_daily_at"
+            android:summary="@string/pref_summ_daily_at"
+            android:defaultValue="@string/pref_default_daily_at"
+            android:inputType="time"
+            android:dependency="@string/pref_key_service_active"
+            />
         <EditTextPreference
-            android:key="clear_interval"
-            android:title="Delete interval"
-            android:summary="Clear the folder every X minutes"
+            android:key="@string/pref_key_periodic_at"
+            android:title="@string/pref_title_periodic_at"
+            android:summary="@string/pref_summ_periodic_at"
             android:inputType="number"
-            android:defaultValue="60"
-            android:dependency="active"
+            android:defaultValue="@string/pref_default_periodic_at"
+            android:dependency="@string/pref_key_service_active"
             />
         <CheckBoxPreference
-            android:key="strict_interval"
-            android:title="Strict interval"
-            android:summaryOn="Clear folder exactly on interval"
-            android:summaryOff="Clear folder loosely on interval"
+            android:key="@string/pref_key_use_strict_alarms"
+            android:title="@string/pref_title_use_strict_alarms"
+            android:summaryOn="@string/pref_summOn_use_strict_alarms"
+            android:summaryOff="@string/pref_summOff_use_strict_alarms"
             android:defaultValue="false"
-            android:dependency="active"
+            android:dependency="@string/pref_key_service_active"
             />
 	</PreferenceCategory>
     
     <PreferenceCategory
-        android:title="Filter files">
-        <EditTextPreference 
-            android:key="delete_file_ext"
-            android:title="Delete only files of these extensions:"
-            android:summary="[unimplemented]"
-            android:dependency="active"
+        android:title="@string/pref_cat_filters"
+        >
+        <!--  filter by extension  -->
+        <CheckBoxPreference 
+            android:key="@string/pref_key_use_filter_extensions"
+            android:title="@string/pref_title_use_filter_extensions"
+            android:summaryOn="@string/pref_summOn_use_filter_extensions"
+            android:summaryOff="@string/pref_summOff_use_filter_extensions"
+            android:defaultValue="false"
+            android:dependency="@string/pref_key_service_active"
+            />
+        <CheckBoxPreference
+            android:key="@string/pref_key_delete_files_matching_extension"
+            android:title="@string/pref_title_delete_files_matching_extension"
+            android:summaryOn="@string/pref_summOn_delete_files_matching_extension"
+            android:summaryOff="@string/pref_summOff_delete_files_matching_extension"
+            android:defaultValue="true"
+            android:dependency="@string/pref_key_service_active"
             />
         <EditTextPreference 
-            android:key="delete_file_pattern"
-            android:title="Delete files matching this pattern:"
-            android:summary="[unimplemented]"
-            android:dependency="active"
+            android:key="@string/pref_key_filter_extensions"
+            android:title="@string/pref_title_filter_extensions"
+            android:summary="@string/pref_summ_filter_extensions"
+            android:defaultValue="@string/pref_default_filter_extensions"
+            android:dependency="@string/pref_key_service_active"
+            />
+        <!--  filter by pattern  -->
+        <CheckBoxPreference 
+            android:key="@string/pref_key_use_filter_pattern"
+            android:title="@string/pref_title_use_filter_pattern"
+            android:summaryOn="@string/pref_summOn_use_filter_pattern"
+            android:summaryOff="@string/pref_summOff_use_filter_pattern"
+            android:defaultValue="false"
+            android:dependency="@string/pref_key_service_active"
+            />
+        <CheckBoxPreference
+            android:key="@string/pref_key_delete_files_matching_pattern"
+            android:title="@string/pref_title_delete_files_matching_pattern"
+            android:summaryOn="@string/pref_summOn_delete_files_matching_pattern"
+            android:summaryOff="@string/pref_summOff_delete_files_matching_pattern"
+            android:defaultValue="true"
+            android:dependency="@string/pref_key_service_active"
+            />
+        <EditTextPreference 
+            android:key="@string/pref_key_filter_pattern"
+            android:title="@string/pref_title_filter_pattern"
+            android:summary="@string/pref_summ_filter_pattern"
+            android:defaultValue="@string/pref_default_filter_pattern"
+            android:dependency="@string/pref_key_service_active"
             />
     </PreferenceCategory>
     

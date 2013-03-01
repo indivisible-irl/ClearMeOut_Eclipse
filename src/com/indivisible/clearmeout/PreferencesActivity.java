@@ -21,7 +21,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 {
 
 	//// data
-//	private static final int folderIntentRequestCode = 1;
 	private static final String strInterval = "Clear the folder every %d minutes";
 	private static final String TAG = "CMO:PreferencesActivity";
 	private final int REQUEST_CODE_PICK_DIR = 1;
@@ -29,6 +28,8 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 	private EditTextPreference pFolder;
 	private EditTextPreference pInterval;
 	
+	private String pFolderKey;
+	private String pIntervalKey;
 	
 	//// default Activity methods
 	
@@ -76,8 +77,11 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
 	private void initPrefs()
 	{
-		pFolder = (EditTextPreference) findPreference("folder");
-		pInterval = (EditTextPreference) findPreference("clear_interval");
+		pFolderKey = getString(R.string.pref_key_target_folder);
+		pIntervalKey = getString(R.string.pref_key_periodic_at);
+		
+		pFolder = (EditTextPreference) findPreference(pFolderKey);				//FIXME get @string ref
+		pInterval = (EditTextPreference) findPreference(pIntervalKey);			//FIXME get @string ref
 		
 		// pFolder
 		Intent folderIntent = new Intent(this, FileExplore.class);
@@ -149,7 +153,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
 	{
-		if (key.equals("clear_interval"))
+		if (key.equals(pIntervalKey))	//FIXME get @string ref
 		{
 			updateIntervalSummary();
 		}
