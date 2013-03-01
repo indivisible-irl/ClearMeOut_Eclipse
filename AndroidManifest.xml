@@ -57,6 +57,10 @@
             android:name="com.mburman.fileexplore.FileExplore"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.vassiliev.androidfilebrowser.FileBrowserActivity"
+            android:label="@string/app_name" >
+        </activity>
         
     </application>
 

@@ -37,15 +37,15 @@ import com.indivisible.clearmeout.R;
 
 public class FileBrowserActivity extends Activity {
 	// Intent Action Constants
-	public static final String INTENT_ACTION_SELECT_DIR = "ua.com.vassiliev.androidfilebrowser.SELECT_DIRECTORY_ACTION";
-	public static final String INTENT_ACTION_SELECT_FILE = "ua.com.vassiliev.androidfilebrowser.SELECT_FILE_ACTION";
+	public static final String INTENT_ACTION_SELECT_DIR = "com.vassiliev.androidfilebrowser.SELECT_DIRECTORY_ACTION";
+	public static final String INTENT_ACTION_SELECT_FILE = "com.vassiliev.androidfilebrowser.SELECT_FILE_ACTION";
 
 	// Intent parameters names constants
-	public static final String startDirectoryParameter = "ua.com.vassiliev.androidfilebrowser.directoryPath";
-	public static final String returnDirectoryParameter = "ua.com.vassiliev.androidfilebrowser.directoryPathRet";
-	public static final String returnFileParameter = "ua.com.vassiliev.androidfilebrowser.filePathRet";
-	public static final String showCannotReadParameter = "ua.com.vassiliev.androidfilebrowser.showCannotRead";
-	public static final String filterExtension = "ua.com.vassiliev.androidfilebrowser.filterExtension";
+	public static final String startDirectoryParameter = "com.vassiliev.androidfilebrowser.directoryPath";
+	public static final String returnDirectoryParameter = "com.vassiliev.androidfilebrowser.directoryPathRet";
+	public static final String returnFileParameter = "com.vassiliev.androidfilebrowser.filePathRet";
+	public static final String showCannotReadParameter = "com.vassiliev.androidfilebrowser.showCannotRead";
+	public static final String filterExtension = "com.vassiliev.androidfilebrowser.filterExtension";
 
 	// Stores names of traversed directories
 	ArrayList<String> pathDirsList = new ArrayList<String>();

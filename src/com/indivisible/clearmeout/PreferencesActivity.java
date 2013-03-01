@@ -1,7 +1,5 @@
 package com.indivisible.clearmeout;
 
-import java.io.File;
-
 import com.mburman.fileexplore.FileExplore;
 
 import android.content.Context;
@@ -15,6 +13,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 
 @SuppressWarnings("deprecation")	//FIXME comment this to view where to update to newer functionality
@@ -22,9 +21,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 {
 
 	//// data
-	private static final int folderIntentRequestCode = 1;
+//	private static final int folderIntentRequestCode = 1;
 	private static final String strInterval = "Clear the folder every %d minutes";
 	private static final String TAG = "CMO:PreferencesActivity";
+	private final int REQUEST_CODE_PICK_DIR = 1;
 	
 	private EditTextPreference pFolder;
 	private EditTextPreference pInterval;
@@ -88,10 +88,11 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 	
 	private void updateFolderPreference(Intent receivedIntent)
 	{
-		String selectedFilePath = receivedIntent.getStringExtra("filepath");
+		String selectedFolderPath = receivedIntent.getStringExtra(
+				com.vassiliev.androidfilebrowser.FileBrowserActivity.returnDirectoryParameter);
 		
-		int lastPathSep = selectedFilePath.lastIndexOf(File.separator);
-		String selectedFolderPath = selectedFilePath.substring(0, lastPathSep);
+//		int lastPathSep = selectedFilePath.lastIndexOf(File.separator);
+//		String selectedFolderPath = selectedFilePath.substring(0, lastPathSep);
 		
 		pFolder.setSummary(selectedFolderPath);
 		pFolder.setText(selectedFolderPath);
@@ -122,8 +123,13 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 			pFolder.getDialog().dismiss();
 			
 			// create the file picking intent
-			Intent folderIntent = new Intent(this, FileExplore.class);
-			startActivityForResult(folderIntent, folderIntentRequestCode);
+			
+			// new AndroidFileBrowser functionality
+			performFolderPreferenceClickAction();
+			
+			// removed AndroidFileExplore
+//			Intent folderIntent = new Intent(this, FileExplore.class);
+//			startActivityForResult(folderIntent, folderIntentRequestCode);
 			
 			return true;
 		}
@@ -157,29 +163,68 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if (resultCode == 1)
-		{
-			switch (requestCode)
-			{
-			case folderIntentRequestCode:
-				Log.d(TAG, "ActivityResult recieved correctly");
-				
-				updateFolderPreference(data);
-				break;
-			
-			default:
-				Log.e(TAG, "onActivityResult: invalid request code - " +requestCode);
-				break;
-			}
-		}
-		else
-		{
-			Log.w(TAG, "Received non 1 resultCode: " +resultCode);
-		}
+		if (requestCode == REQUEST_CODE_PICK_DIR) {
+        	if(resultCode == RESULT_OK) {
+        		updateFolderPreference(data);
+//        		String newDir = data.getStringExtra(
+//        				com.vassiliev.androidfilebrowser.FileBrowserActivity.returnDirectoryParameter);
+//        		Toast.makeText(
+//        				this, 
+//        				"Received DIRECTORY path from file browser:\n"+newDir, 
+//        				Toast.LENGTH_LONG).show(); 
+	        	
+        	} else {//if(resultCode == this.RESULT_OK) {
+        		Toast.makeText(
+        				this, 
+        				"Received NO result from file browser",
+        				Toast.LENGTH_LONG).show(); 
+        	}//END } else {//if(resultCode == this.RESULT_OK) {
+        }//if (requestCode == REQUEST_CODE_PICK_DIR) {
+		
+//		if (resultCode == 1)
+//		{
+//			switch (requestCode)
+//			{
+//			case folderIntentRequestCode:
+//				Log.d(TAG, "ActivityResult recieved correctly");
+//				
+//				updateFolderPreference(data);
+//				break;
+//			
+//			default:
+//				Log.e(TAG, "onActivityResult: invalid request code - " +requestCode);
+//				break;
+//			}
+//		}
+//		else
+//		{
+//			Log.w(TAG, "Received non 1 resultCode: " +resultCode);
+//		}
 	}
 
 
 
+	private void performFolderPreferenceClickAction()
+	{
+		Log.d(TAG, "Start browsing button pressed");
+		Intent fileExploreIntent = new Intent(
+				com.vassiliev.androidfilebrowser.FileBrowserActivity.INTENT_ACTION_SELECT_DIR,
+				null,
+				this,
+				com.vassiliev.androidfilebrowser.FileBrowserActivity.class
+				);
+		//If the parameter below is not provided the Activity will try to start from sdcard(external storage),
+		// if fails, then will start from roor "/"
+		// Do not use "/sdcard" instead as base address for sdcard use Environment.getExternalStorageDirectory() 
+//		fileExploreIntent.putExtra(
+//				ua.com.vassiliev.androidfilebrowser.FileBrowserActivity.startDirectoryParameter, 
+//				"/sdcard"
+//				);
+		startActivityForResult(
+				fileExploreIntent,
+				REQUEST_CODE_PICK_DIR
+				);
+	}
 	
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
