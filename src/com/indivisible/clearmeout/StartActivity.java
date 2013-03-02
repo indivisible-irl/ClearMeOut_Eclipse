@@ -6,6 +6,8 @@ import java.io.IOException;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -22,14 +24,12 @@ public class StartActivity extends Activity implements OnClickListener
 	
 
 	//// data
-	private Button bPref, bDelete, bRefill;
+	private Button bPref, bDelete, bHelp, bRefill;
 	private TextView tvFolderHint;
 	
 	private String folder;
 	
 	private static final String TAG = "CMO:StartActivity";
-	private static final String key_folder = "folder";
-	private static final String textFolderHint = "Targetting folder:\n    %s";
 	
 	
 	
@@ -50,9 +50,10 @@ public class StartActivity extends Activity implements OnClickListener
 		super.onResume();
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		folder = prefs.getString(key_folder, "---");
+		folder = prefs.getString(getString(R.string.pref_key_target_folder),
+				getString(R.string.pref_default_target_folder));
 		
-		tvFolderHint.setText(String.format(textFolderHint, folder));
+		tvFolderHint.setText(String.format(getString(R.string.start_tv_target_folder), folder));
 	}
 
 	
@@ -71,6 +72,10 @@ public class StartActivity extends Activity implements OnClickListener
 				
 			case R.id.start_bDelete:
 				performDelete();
+				break;
+				
+			case R.id.start_bHelp:
+				showHelp();
 				break;
 				
 			case R.id.start_bFillDir:
@@ -103,13 +108,15 @@ public class StartActivity extends Activity implements OnClickListener
 		tvFolderHint = (TextView) findViewById(R.id.start_tvFolderHint);
 		bPref = (Button) findViewById(R.id.start_bPref);
 		bDelete = (Button) findViewById(R.id.start_bDelete);
+		bHelp = (Button) findViewById(R.id.start_bHelp);
 		bRefill = (Button) findViewById(R.id.start_bFillDir);
 		
 		bPref.setOnClickListener(this);
 		bDelete.setOnClickListener(this);
+		bHelp.setOnClickListener(this);
 		bRefill.setOnClickListener(this);
 		
-		// remove the view from release versions
+		// remove the refill button from release versions
 		bRefill.setVisibility(View.GONE);
 	}
 
@@ -121,6 +128,21 @@ public class StartActivity extends Activity implements OnClickListener
 		Log.d(TAG, "Starting DeleteService...");
 		Intent deleteIntent = new Intent(this, DeleteService.class);
 		startService(deleteIntent);
+	}
+	
+	/**
+	 * Display the help screen
+	 */
+	private void showHelp()
+	{
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+		dialogBuilder.setTitle(getString(R.string.help_title));
+		dialogBuilder.setMessage(getString(R.string.help_text));
+		dialogBuilder.setIcon(R.drawable.ic_launcher);
+		
+		Dialog helpDialog = dialogBuilder.create();
+		helpDialog.show();
+
 	}
 	
 	/**

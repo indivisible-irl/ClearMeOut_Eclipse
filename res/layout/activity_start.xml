@@ -9,28 +9,44 @@
     android:orientation="vertical"
     tools:context=".StartActivity" >
 
-    <Button android:id="@+id/start_bPref"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:text="Preferences"
-        />
     <Button android:id="@+id/start_bDelete"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_margin="8dp"
         android:gravity="center"
-        android:text="ClearMeOut now"
+        android:text="@string/start_b_delete"
+        />
+    <Button android:id="@+id/start_bPref"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:text="@string/start_b_preferences"
+        />
+    <Button android:id="@+id/start_bHelp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:text="@string/start_b_help"
         />
     
     <!--  HIDE IN RELEASE VERSIONS  -->
     <Button android:id="@+id/start_bFillDir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:gravity="center"
-        android:text="Refill directory (testing)"
+        android:text="@string/start_b_refill"
         />
     
     <!--  TextViews  -->
+    <View 
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_margin="8dp"
+        android:background="#888888"
+        />
     <TextView android:id="@+id/start_tvFolderHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,21 +54,6 @@
         android:paddingTop="15dp"
         android:text=""
         />
-    <View 
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_margin="8dp"
-        android:background="#888888"
-        />
-    <ScrollView 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/quick_descrip"
-            />
-    </ScrollView>
     
 
 </LinearLayout>

@@ -6,7 +6,16 @@
         <string name="app_name">ClearMeOut</string>
         <string name="action_settings">Settings</string>
     
+    <!--  StartActivity Strings -->
     
+        <string name="start_b_preferences">Preferences</string>
+        <string name="start_b_delete">ClearMeOut Now</string>
+        <string name="start_b_help">Help</string>
+        <string name="start_b_refill">Refill target dir (testing)</string>
+        
+        <string name="start_tv_target_folder">Current target folder:\n\t-  %s</string>
+        
+        
     <!--  Preferences Strings  -->
         
         <!-- category titles -->
@@ -32,7 +41,7 @@
             <string name="pref_key_target_folder">target_folder</string>
             <string name="pref_title_target_folder">Select folder to clear</string>
             <string name="pref_summ_target_folder">[Folder path]</string>
-            <string name="pref_default_target_folder">[click here to set]</string>
+            <string name="pref_default_target_folder">[set folder to start]</string>
     
         <!-- delete settings -->
             <!-- recursive_delete -->
@@ -52,7 +61,7 @@
             <string name="pref_key_interval_type">interval_type</string>
             <string name="pref_title_interval_type">Schedule type:</string>
             <string name="pref_summOn_interval_type">Clear folder once a day</string>
-            <string name="pref_summOff_interval_type">Clear folder periodically throughout the day</string>
+            <string name="pref_summOff_interval_type">Clear folder periodically</string>
     
             <!-- daily_at -->
             <string name="pref_key_daily_at">daily_at</string>
@@ -63,7 +72,7 @@
             <!-- periodic_at -->
             <string name="pref_key_periodic_at">periodic_at</string>
             <string name="pref_title_periodic_at">Periodic delete interval</string>
-            <string name="pref_summ_periodic_at">Clear the folder every %s minutes</string>
+            <string name="pref_summ_periodic_at">Clear the folder every %d minutes</string>
             <string name="pref_default_periodic_at">60</string>
     
             <!-- use_strict_alarms -->
@@ -107,18 +116,18 @@
             <!-- filter_pattern -->
             <string name="pref_key_filter_pattern">filter_pattern</string>
             <string name="pref_title_filter_pattern">Filename pattern</string>
-            <string name="pref_summ_filter_pattern">[unimplemented]</string>
+            <string name="pref_summ_filter_pattern">See \'Help\' for pattern formatting</string>
             <string name="pref_default_filter_pattern">[none]</string>
     
     
     <!--  Quick help text for temp use before implementing a real help screen  -->
-    <string name="quick_descrip">
-        Set folder to clear in \'Preferences\'. Frequency should also be set there too.
-        \n\nCURRENT LIMITATION: The folder you want to select must have a file inside it. Select any file to choose its parent folder as the target.\n(I\'ll fix this soon)
-        \n\nUsing a \'Recursive delete\' will delete a folder\'s contents AND ALL sub-folders too.\nUncheck this option to only delete files directly within the target folder.
-        \n\nUsing a \'Strict interval\' means that the folder will be cleared exacly when you set it for.\nThis possible advantage has the disadvantage of using up some small amount of extra battery in some situations.\nIf this is an issue for you disable this option.
-        \n\nThe service\/schedule is set on enabling (or unset on diasabling) the service in \'Preferences\'.\nTry toggling this setting if it doesn\'t seem to be working.
-        \n\nIf you ONLY want to manualy clear a folder:\n- activate the service in \'Preferences\'\n- set the target folder\n- deactivate the service\n- hit the \'ClearMeOut Now\' button when desired\n\nAs long as a folder is set the \'ClearMeOut Now\' button will work. 
+    <string name="help_title">ClearMeOut Help</string>
+    <string name="help_text">
+        This app is still in the dev stages so here\'s a few tips to get you started:
+        \n\nUsing a \'Recursive delete\' will delete a folder\'s contents AND ALL sub-folders\'s files too.\nUncheck this option to only delete files directly within the target folder.
+        \nOption to delete or not the sub-folders themselves.
+        \n\nUsing a \'Strict interval\' means that the folder will be cleared exactly when you set it for.\nThis possible advantage has the disadvantage of using up some small amount of extra battery in some situations.\nIf this is an issue for you disable this option.
+        \n\nIf you ONLY want to manualy clear a folder:\n- set the target folder\n- hit the \'ClearMeOut Now\' button when desired\n\nAs long as a folder is set the \'ClearMeOut Now\' button will work and respect all delete settings. 
     </string>
 
 </resources>
