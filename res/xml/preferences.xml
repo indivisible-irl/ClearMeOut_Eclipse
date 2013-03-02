@@ -63,7 +63,7 @@
             android:defaultValue="true"
             android:dependency="@string/pref_key_service_active"
             />
-        <EditTextPreference 
+        <com.indivisible.clearmeout.preferences.TimePreference
             android:key="@string/pref_key_daily_at"
             android:title="@string/pref_title_daily_at"
             android:summary="@string/pref_summ_daily_at"

@@ -1,5 +1,6 @@
 package com.indivisible.clearmeout;
 
+import com.indivisible.clearmeout.preferences.TimePreference;
 import com.mburman.fileexplore.FileExplore;
 
 import android.content.Intent;
@@ -25,22 +26,20 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 	private static final String TAG = "CMO:PreferencesActivity";
 	private final int REQUEST_CODE_PICK_DIR = 1;
 	
-	// shared preferences
-	private SharedPreferences prefs;
 	
 	// preferences
-	private CheckBoxPreference pCbServiceActive;
+//	private CheckBoxPreference pCbServiceActive;
 	private EditTextPreference pEtFolder;
-	private CheckBoxPreference pCbRecursiveDelete, pCbDeleteFolders, pCbNotifyOnDelete;
+//	private CheckBoxPreference pCbRecursiveDelete, pCbDeleteFolders, pCbNotifyOnDelete;
 	private CheckBoxPreference pCbIntervalType;										//TODO intervalType --> list
-	private EditTextPreference pEtDailyTime, pEtIntervalMinutes;
-	private CheckBoxPreference pCbStrictInterval;
+	private TimePreference pTpDailyTime;
+	private EditTextPreference pEtIntervalMinutes;
+//	private CheckBoxPreference pCbStrictInterval;
 	private CheckBoxPreference pCbUseExtensionFilter, pCbUsePatternFilter;
 	private CheckBoxPreference pCbDeleteExtensionMatches, pCbDeletePatternMatches;
 	private EditTextPreference pEtExtensionsFilter, pEtPatternFilter;
 	
-	
-	
+
 	
 	//// default Activity methods
 	
@@ -50,7 +49,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 		super.onCreate(savedInstanceState);
 		
 		addPreferencesFromResource(R.xml.preferences);
-		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		
 		initPreferences();
 		
@@ -71,7 +70,10 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 		
 		//TODO updatePreferences() containing following and others
 		pEtFolder.setSummary(pEtFolder.getText());
+		setFolderPreferenceClickIntent();
 		updateIntervalSummary();
+		updateIntervalTypesEnabled();
+		updatePTpDailyTime();
 	}
 
 	// release the sharedPreferenceListener
@@ -96,17 +98,17 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 
 	private void initPreferences()
 	{
-		pCbServiceActive = (CheckBoxPreference) findPreference(getString(R.string.pref_key_service_active));
+		//pCbServiceActive = (CheckBoxPreference) findPreference(getString(R.string.pref_key_service_active));
 		
 		pEtFolder = (EditTextPreference) findPreference(getString(R.string.pref_key_target_folder));
-		pCbRecursiveDelete = (CheckBoxPreference) findPreference(getString(R.string.pref_key_use_recursive_delete));
-		pCbDeleteFolders = (CheckBoxPreference) findPreference(getString(R.string.pref_key_delete_folders));
-		pCbNotifyOnDelete = (CheckBoxPreference) findPreference(getString(R.string.pref_key_notify_on_delete));
+		//pCbRecursiveDelete = (CheckBoxPreference) findPreference(getString(R.string.pref_key_use_recursive_delete));
+		//pCbDeleteFolders = (CheckBoxPreference) findPreference(getString(R.string.pref_key_delete_folders));
+		//pCbNotifyOnDelete = (CheckBoxPreference) findPreference(getString(R.string.pref_key_notify_on_delete));
 		
 		pCbIntervalType = (CheckBoxPreference) findPreference(getString(R.string.pref_key_interval_type));
-		pEtDailyTime = (EditTextPreference) findPreference(getString(R.string.pref_key_daily_at));
+		pTpDailyTime = (TimePreference) findPreference(getString(R.string.pref_key_daily_at));
 		pEtIntervalMinutes = (EditTextPreference) findPreference(getString(R.string.pref_key_periodic_at));
-		pCbStrictInterval =  (CheckBoxPreference) findPreference(getString(R.string.pref_key_use_strict_alarms));
+		//pCbStrictInterval =  (CheckBoxPreference) findPreference(getString(R.string.pref_key_use_strict_alarms));
 		
 		pCbUseExtensionFilter = (CheckBoxPreference) findPreference(getString(R.string.pref_key_use_filter_extensions));
 		pCbDeleteExtensionMatches = (CheckBoxPreference) findPreference(getString(R.string.pref_key_delete_files_matching_extension));
@@ -115,12 +117,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 		pCbDeletePatternMatches = (CheckBoxPreference) findPreference(getString(R.string.pref_key_delete_files_matching_pattern));
 		pEtPatternFilter = (EditTextPreference) findPreference(getString(R.string.pref_key_filter_pattern));
 		
-		// pFolder
-		Intent folderIntent = new Intent(this, FileExplore.class);
-		pEtFolder.setIntent(folderIntent);
-		pEtFolder.setOnPreferenceClickListener(this);
-		
-		//TODO disable filter prefs until implemented
 	}
 	
 	
@@ -134,8 +130,6 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 		if (preference.equals(pEtFolder))
 		{
 //			// disable the EditText dialog (and soft keyboard) as we're using a file picking intent instead
-//			InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//			imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 			pEtFolder.getDialog().dismiss();
 			
 			// pick folder
@@ -166,24 +160,33 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 		{
 			updateIntervalTypesEnabled();
 		}
+		else if (key.equals(pTpDailyTime.getKey()))
+		{
+			updatePTpDailyTime();
+		}
 		
 	}
 	
 	//// custom preference updates and actions
 	//TODO see what the common actions are and method(pref) them
 	
+	private void setFolderPreferenceClickIntent()
+	{
+		Intent folderIntent = new Intent(this, FileExplore.class);
+		pEtFolder.setIntent(folderIntent);
+		pEtFolder.setOnPreferenceClickListener(this);
+	}
+	
 	private void updateFolderPreference(Intent receivedIntent)
 	{
 		String selectedFolderPath = receivedIntent.getStringExtra(
 				com.vassiliev.androidfilebrowser.FileBrowserActivity.returnDirectoryParameter);
 		
-//		int lastPathSep = selectedFilePath.lastIndexOf(File.separator);
-//		String selectedFolderPath = selectedFilePath.substring(0, lastPathSep);
 		
 		pEtFolder.setSummary(selectedFolderPath);
 		pEtFolder.setText(selectedFolderPath);
 		
-//		Toast.makeText(this, "SET AS:\n\n"+pFolder.getText(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "SET AS:\n\n"+pEtFolder.getText(), Toast.LENGTH_SHORT).show();
 	}
 
 	private void updateIntervalSummary()
@@ -197,15 +200,24 @@ public class PreferencesActivity extends PreferenceActivity implements OnPrefere
 		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(pCbIntervalType.getKey(), true))
 		{
 			// set to daily
-			pEtDailyTime.setEnabled(true);
+			pTpDailyTime.setEnabled(true);
 			pEtIntervalMinutes.setEnabled(false);
 		}
 		else
 		{
 			// set to periodic
-			pEtDailyTime.setEnabled(false);
+			pTpDailyTime.setEnabled(false);
 			pEtIntervalMinutes.setEnabled(true);
 		}
+	}
+	
+	/**
+	 * Update the time value within pTpDailyTime's summary
+	 */
+	private void updatePTpDailyTime()
+	{
+		String summ = String.format(getString(R.string.pref_summ_daily_at), pTpDailyTime.toString());
+		pTpDailyTime.setSummary(summ);
 	}
 
 	/**

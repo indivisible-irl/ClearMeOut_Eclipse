@@ -6,6 +6,7 @@ import java.io.FilenameFilter;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,12 +20,10 @@ public class DeleteService extends Service
 	private String folder;
 	private File root;
 	private boolean recursiveDelete;
+	private boolean deleteFolders;
+	private boolean notifyOnDelete;
 	
 	private static final String TAG = "CMO:DeleteService";
-	private static final String key_active = "active";
-	private static final String key_recursive = "recursive_delete";
-	private static final String key_folder = "folder";
-	
 	
 	
 	//// perform on intent calls for this service
@@ -38,7 +37,7 @@ public class DeleteService extends Service
 		// get needed settings
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-		folder = prefs.getString(key_folder, "---");
+		folder = prefs.getString(getString(R.string.pref_key_target_folder), "---");
 		
 		if (folder.equals("---"))
 		{
@@ -46,7 +45,7 @@ public class DeleteService extends Service
 			
 			// set service preference to false
 			Editor edit = prefs.edit();
-			edit.putBoolean(key_active, false);
+			edit.putBoolean(getString(R.string.pref_key_service_active), false);
 			edit.commit();
 			
 			// run UpdateAlarmsService to trigger disable
@@ -56,12 +55,13 @@ public class DeleteService extends Service
 		}
 		else
 		{
-			// check and set recursive or non-recursive
-			recursiveDelete = prefs.getBoolean(key_recursive, false);
+			// get needed preferences
+			recursiveDelete = prefs.getBoolean(getString(R.string.pref_key_use_recursive_delete), false);
+			deleteFolders = prefs.getBoolean(getString(R.string.pref_key_delete_folders), false);
+			notifyOnDelete = prefs.getBoolean(getString(R.string.pref_key_notify_on_delete), false);
 			
-			// notify user and perform delete
-//			Toast.makeText(this, "ClearMeOut emptying folder:\n" +folder, Toast.LENGTH_SHORT).show();
-			Log.d(TAG, "ClearMeOut emptying folder:\n" +folder);
+			// perform delete
+			Log.d(TAG, "ClearMeOut emptying folder: " +folder);
 			performDelete();
 			
 			// end service
@@ -82,8 +82,15 @@ public class DeleteService extends Service
 		}
 		else
 		{
-			Log.e(TAG, "Cannot perform recursive delete: " +root.getAbsolutePath());
-//			finish();
+			Log.e(TAG, "Cannot perform delete: " +root.getAbsolutePath());
+			if (notifyOnDelete)
+			{
+				Toast.makeText(
+						this,
+						"ClearMeOut failed to clear:\n" +folder+ "\nDid not have required access.",
+						Toast.LENGTH_LONG).show();
+			}
+			stopSelf();
 		}
 		
 		
@@ -97,6 +104,13 @@ public class DeleteService extends Service
 			Log.d(TAG, "Performing non-recursive delete on " +root.getAbsolutePath());
 			performNonRecursiveDelete();
 		}
+		
+		Log.d(TAG, "Finished delete");
+		
+		if (notifyOnDelete)
+		{
+			Toast.makeText(this, "ClearMeOut emptied:\n" +folder, Toast.LENGTH_LONG).show();
+		}
 	}
 
 
@@ -108,7 +122,7 @@ public class DeleteService extends Service
 	{
 		if (file.isFile())
 		{
-			Log.d(TAG, "Del: " +file.getAbsolutePath());
+			Log.d(TAG, "Del (F): " +file.getAbsolutePath());
 			file.delete();
 		}
 		else
@@ -120,15 +134,23 @@ public class DeleteService extends Service
 				performRecursiveDelete(new File(file, fname));
 			}
 			
-			if (file != root)
+			if (file.isDirectory() && deleteFolders)
 			{
-				Log.d(TAG, "Del (F): " +file.getAbsolutePath());
-				file.delete();
+				if (file != root)
+				{
+					Log.d(TAG, "Del (D): " +file.getAbsolutePath());
+					file.delete();
+				}
+				else
+				{
+					Log.d(TAG, "Did not delete root dir: " +file.getAbsolutePath());
+				}
 			}
 			else
-				Log.d(TAG, "Did not delete root dir: " +root.getAbsolutePath());
+			{
+				Log.d(TAG, "Skipping delete of folder: " +file.getAbsolutePath());
+			}
 		}
-		
 	}
 	
 	

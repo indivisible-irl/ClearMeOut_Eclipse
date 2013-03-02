@@ -30,6 +30,7 @@ public class StartActivity extends Activity implements OnClickListener
 	private String folder;
 	
 	private static final String TAG = "CMO:StartActivity";
+	private boolean enableRefill = true;					// will show a button to populate target folder for testing
 	
 	
 	
@@ -117,7 +118,8 @@ public class StartActivity extends Activity implements OnClickListener
 		bRefill.setOnClickListener(this);
 		
 		// remove the refill button from release versions
-		bRefill.setVisibility(View.GONE);
+		if (!enableRefill)
+			bRefill.setVisibility(View.GONE);
 	}
 
 	/**
