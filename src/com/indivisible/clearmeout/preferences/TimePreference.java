@@ -107,6 +107,6 @@ public class TimePreference extends DialogPreference {
     @Override
     public String toString()
     {
-        return String.valueOf(lastHour)+":"+String.valueOf(lastMinute);
+        return String.format("%02d", lastHour)+":"+String.format("%02d", lastMinute);
     }
 }
