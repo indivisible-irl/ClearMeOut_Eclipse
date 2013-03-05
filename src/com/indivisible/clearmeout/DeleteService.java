@@ -76,24 +76,35 @@ public class DeleteService extends Service
 	private void performDelete()
 	{
 		root = new File(folder);
-		if (root.exists() && root.canWrite())
+		
+		if (root.exists())
 		{
-			Log.d(TAG, "Can write to: " +root.getAbsolutePath());
+			if (root.canWrite())
+			{
+				Log.d(TAG, "Can write to: " +root.getAbsolutePath());
+			}
+			else
+			{
+				Log.e(TAG, "Cannot perform delete: " +root.getAbsolutePath());
+				if (notifyOnDelete)
+				{
+					Toast.makeText(
+							this,
+							"ClearMeOut failed to clear:\n" +folder+ "\nDid not have required access.\nDoes the directory exist?",
+							Toast.LENGTH_LONG).show();
+				}
+				stopSelf();
+			}
 		}
 		else
 		{
-			Log.e(TAG, "Cannot perform delete: " +root.getAbsolutePath());
-			if (notifyOnDelete)
-			{
-				Toast.makeText(
-						this,
-						"ClearMeOut failed to clear:\n" +folder+ "\nDid not have required access.",
-						Toast.LENGTH_LONG).show();
-			}
+			Log.w(TAG, "Folder not exists: " +folder);
+			disableService();
 			stopSelf();
 		}
 		
 		
+		// apply delete to sub-folders also?
 		if (recursiveDelete)
 		{
 			Log.d(TAG, "Performing recursive delete on " +root.getAbsolutePath());
@@ -109,7 +120,7 @@ public class DeleteService extends Service
 		
 		if (notifyOnDelete)
 		{
-			Toast.makeText(this, "ClearMeOut emptied:\n" +folder, Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "ClearMeOut emptied:\n" +folder, Toast.LENGTH_LONG).show();		//TODO strings.xml
 		}
 	}
 
@@ -184,6 +195,24 @@ public class DeleteService extends Service
 		}
 	}
 
+	/**
+	 * Set service to inactive if we hit an error
+	 */
+	private void disableService()
+	{
+		Log.w(TAG, "Disabling service");
+		Toast.makeText(getApplicationContext(),
+				"Disabling ClearMeOut service due to an error. Is the target folder set and exist?",		//TODO strings.xml
+				Toast.LENGTH_LONG).show();
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		Editor editPrefs = prefs.edit();
+		editPrefs.putBoolean(getString(R.string.pref_key_service_active), false);
+		editPrefs.commit();
+		
+		Intent updateIntent = new Intent(getApplicationContext(), UpdateAlarmsService.class);
+		startService(updateIntent);
+	}
 
 	//// unused binder
 
