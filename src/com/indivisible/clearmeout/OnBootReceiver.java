@@ -13,7 +13,7 @@ public class OnBootReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
-//		Toast.makeText(context, "Received boot complete\n\n" +context.getPackageName(), Toast.LENGTH_SHORT).show();
+	    //TODO pref 'clear on boot' that will run DeleteService
 		Log.d(TAG, "BOOT_COMPLETE received, triggering UpdateAlarmsService...");
 		Intent runClearMeOut = new Intent(context, UpdateAlarmsService.class);
 		context.startService(runClearMeOut);

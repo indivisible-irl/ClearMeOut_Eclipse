@@ -30,7 +30,7 @@ public class StartActivity extends Activity implements OnClickListener
 	private String folder;
 	
 	private static final String TAG = "CMO:StartActivity";
-	private boolean enableRefill = false;					// will show a button to populate target folder for testing
+	private boolean enableRefill = true;					// will show a button to populate target folder for testing
 	
 	
 	

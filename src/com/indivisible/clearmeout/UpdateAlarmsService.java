@@ -17,8 +17,8 @@ public class UpdateAlarmsService extends Service
 
 	private int alarmId;
 	private static final int minsToWaitForFirstRun = 1;
-	private static final long millisPerMinute = 60000L;
-	private static final long millisPerDay =  86400000L;
+	private static final long millisPerMinute = 60000L;    // milliseconds in an hour
+	private static final long millisPerDay =  86400000L;   // milliseconds in a day
 	private static final String TAG = "CMO:UpdateAlarmService";
 	
 	@Override
@@ -27,24 +27,19 @@ public class UpdateAlarmsService extends Service
 		super.onCreate();
 		Log.d(TAG, "UpdateAlarmsService started...");
 		
-		// get the AlarmManager
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		alarmId = Integer.parseInt(getString(R.string.alarm_id));
-
-		// grab all preferences
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		
 		// end activity if not set to active
-		if (!prefs.getBoolean(getString(R.string.pref_key_service_active), false))
+		if (!prefs.getBoolean(getString(R.string.pref_service_active_key), false))
 		{
-			Log.d(TAG, "Service not active. Removing scheduled alarms and stopping...");
+			Log.d(TAG, "Service not active. Removing any scheduled alarms and stopping...");
 			
 			// recreate alarm to cancel it
-			Intent dupIntent = new Intent(this, DeleteService.class);
-			PendingIntent dupPIntent = PendingIntent.getService(getApplicationContext(), alarmId, dupIntent, 0);
-			am.cancel(dupPIntent);
-			
-			// stop service
+			Intent duplicateIntent = new Intent(this, DeleteService.class);
+			PendingIntent duplicatePendingIntent = PendingIntent.getService(getApplicationContext(), alarmId, duplicateIntent, 0);
+			am.cancel(duplicatePendingIntent);
 			stopSelf();
 		}
 		else
@@ -56,12 +51,12 @@ public class UpdateAlarmsService extends Service
 			long repeatMillis;
 			Calendar nowCal = Calendar.getInstance();
 			
-			// type of interval to use
+			// type of interval to use   //TODO move from bool toggle to ListPreference
 			if(prefs.getBoolean(getString(R.string.pref_key_interval_type), true))
 			{
 				Log.d(TAG, "Interval set to Daily");
 
-				repeatMillis = millisPerDay;	// one day in milliseconds
+				repeatMillis = millisPerDay;
 				
 				// get saved time pref
 				String[] values = prefs.getString(getString(R.string.pref_key_daily_at), "00:00").split(":");
@@ -75,7 +70,7 @@ public class UpdateAlarmsService extends Service
 				triggerCal.set(Calendar.MINUTE, mins);
 				triggerCal.set(Calendar.SECOND, 0);
 				
-				//FIXME probable issue on final day of year
+				//FIXME probable issue on final day of year - change to if (before && !(isDecember && is31st))??
 				// if today's time has passed add a day to the trigger to set off tomorrow instead
 				if(triggerCal.before(nowCal)){
 					triggerCal.add(Calendar.MILLISECOND, (int) millisPerDay);
@@ -89,8 +84,8 @@ public class UpdateAlarmsService extends Service
 				Log.d(TAG, "Interval set to periodic");
 				
 				// get min spacing and set repeat
-				int repeatMins = Integer.parseInt(prefs.getString(getString(R.string.pref_key_periodic_at), "60"));
-				Log.d(TAG, "Interval set to (mins): " +repeatMins);
+				int repeatMins = Integer.parseInt(prefs.getString(getString(R.string.pref_key_periodic_at), "60")); //ASK does pref activity limit to valid int values only?
+				Log.d(TAG, String.format("Interval set to %d mins", repeatMins));
 				repeatMillis = repeatMins * millisPerMinute;
 				
 				nextRunMillis = System.currentTimeMillis() + minsToWaitForFirstRun * millisPerMinute;

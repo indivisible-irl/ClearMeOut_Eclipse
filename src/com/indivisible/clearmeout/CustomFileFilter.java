@@ -39,7 +39,7 @@ public class CustomFileFilter implements FileFilter
 			{
 				Log.w(TAG, "Extensions choices was made null as could not access saved value. disabling filter");
 				useExtensionFilter = false;
-				//TODO change useExtensionFilter value to false in actual prefs
+				//TODO change useExtensionFilter value to false in actual preferences
 			}
 			else
 			{

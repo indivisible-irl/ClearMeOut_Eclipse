@@ -34,37 +34,23 @@ public class DeleteService extends Service
 		super.onCreate();
 		Log.d(TAG, "DeleteService started...");
 		
-		// get needed settings
+		// get needed settings and test folder pref saved
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
 		folder = prefs.getString(getString(R.string.pref_key_target_folder), "---");
 		
 		if (folder.equals("---"))
 		{
 			Log.w(TAG, "Default folder value found. Shutting down (and disabling service)");
-			
-			// set service preference to false
-			Editor edit = prefs.edit();
-			edit.putBoolean(getString(R.string.pref_key_service_active), false);
-			edit.commit();
-			
-			// run UpdateAlarmsService to trigger disable
-			Intent disableServiceIntent = new Intent(getApplicationContext(), UpdateAlarmsService.class);
-			startService(disableServiceIntent);
-			stopSelf();
+			disableService();
 		}
 		else
 		{
-			// get needed preferences
+		    Log.d(TAG, "ClearMeOut emptying folder: " +folder);
 			recursiveDelete = prefs.getBoolean(getString(R.string.pref_key_use_recursive_delete), false);
 			deleteFolders = prefs.getBoolean(getString(R.string.pref_key_delete_folders), false);
 			notifyOnDelete = prefs.getBoolean(getString(R.string.pref_key_notify_on_delete), false);
 			
-			// perform delete
-			Log.d(TAG, "ClearMeOut emptying folder: " +folder);
 			performDelete();
-			
-			// end service
 			stopSelf();
 		}
 	}
@@ -201,17 +187,23 @@ public class DeleteService extends Service
 	private void disableService()
 	{
 		Log.w(TAG, "Disabling service");
-		Toast.makeText(getApplicationContext(),
-				"Disabling ClearMeOut service due to an error. Is the target folder set and exist?",		//TODO strings.xml
-				Toast.LENGTH_LONG).show();
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		if (prefs.getBoolean(getString(R.string.pref_key_notify_on_delete), false))   //FIXME need separate bool pref for error disp
+		{
+    		Toast.makeText(getApplicationContext(),
+    				"Disabling ClearMeOut service due to an error. Is the target folder set and exist?",		//TODO strings.xml
+    				Toast.LENGTH_LONG).show();
+	    }
+		
 		Editor editPrefs = prefs.edit();
 		editPrefs.putBoolean(getString(R.string.pref_key_service_active), false);
 		editPrefs.commit();
 		
 		Intent updateIntent = new Intent(getApplicationContext(), UpdateAlarmsService.class);
 		startService(updateIntent);
+		
+		stopSelf();
 	}
 
 	//// unused binder

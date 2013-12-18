@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Collections;
 
+import java.util.Locale;
 //Android imports 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,7 +32,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.*;
 import android.widget.*;
-
 //Import of resources file for file browser
 import com.indivisible.clearmeout.R;
 
@@ -215,7 +215,7 @@ public class FileBrowserActivity extends Activity {
 		ListView lView = (ListView) this.findViewById(R.id.fileListView);
 		lView.setBackgroundColor(Color.LTGRAY);
 		LinearLayout.LayoutParams lParam = new LinearLayout.LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		lParam.setMargins(15, 5, 15, 5);
 		lView.setAdapter(this.adapter);
 		lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -354,8 +354,7 @@ public class FileBrowserActivity extends Activity {
 				// int dp5 = (int) (5 *
 				// getResources().getDisplayMetrics().density + 0.5f);
 				int dp3 = (int) (3 * getResources().getDisplayMetrics().density + 0.5f);
-				// TODO: change next line for empty directory, so text will be
-				// centered
+				// TODO: change next line for empty directory, so text will be centred
 				textView.setCompoundDrawablePadding(dp3);
 				textView.setBackgroundColor(Color.LTGRAY);
 				return view;
@@ -366,7 +365,7 @@ public class FileBrowserActivity extends Activity {
 	private class Item {
 		public String file;
 		public int icon;
-		public boolean canRead;
+//		public boolean canRead;
 
 		public Item(String file, Integer icon, boolean canRead) {
 			this.file = file;
@@ -381,7 +380,7 @@ public class FileBrowserActivity extends Activity {
 
 	private class ItemFileNameComparator implements Comparator<Item> {
 		public int compare(Item lhs, Item rhs) {
-			return lhs.file.toLowerCase().compareTo(rhs.file.toLowerCase());
+			return lhs.file.toLowerCase(Locale.getDefault()).compareTo(rhs.file.toLowerCase(Locale.getDefault()));
 		}
 	}
 
@@ -411,22 +410,22 @@ public class FileBrowserActivity extends Activity {
 		// One binary gigabyte equals 1,073,741,824 bytes.
 		if (bytes > 1073741824) {// Add GB
 			long gbs = bytes / 1073741824;
-			retStr += (new Long(gbs)).toString() + "GB ";
+			retStr += Long.valueOf(gbs).toString() + "GB ";
 			bytes = bytes - (gbs * 1073741824);
 		}
 		// One MB - 1048576 bytes
 		if (bytes > 1048576) {// Add GB
 			long mbs = bytes / 1048576;
-			retStr += (new Long(mbs)).toString() + "MB ";
+			retStr += Long.valueOf(mbs).toString() + "MB ";
 			bytes = bytes - (mbs * 1048576);
 		}
 		if (bytes > 1024) {
 			long kbs = bytes / 1024;
-			retStr += (new Long(kbs)).toString() + "KB";
+			retStr += Long.valueOf(kbs).toString() + "KB";
 			bytes = bytes - (kbs * 1024);
 		} else
-			retStr += (new Long(bytes)).toString() + " bytes";
+			retStr += Long.valueOf(bytes).toString() + " bytes";
 		return retStr;
-	}// public static String formatBytes(long bytes){
+	}
 
-}// END public class FileBrowserActivity extends Activity {
+}
