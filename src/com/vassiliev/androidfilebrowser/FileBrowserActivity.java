@@ -145,7 +145,7 @@ public class FileBrowserActivity extends Activity {
 		Button upDirButton = (Button) this.findViewById(R.id.upDirectoryButton);
 		upDirButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.d(LOGTAG, "onclick for upDirButton");
+//				Log.d(LOGTAG, "onclick for upDirButton");
 				loadDirectoryUp();
 				loadFileList();
 				adapter.notifyDataSetChanged();
@@ -193,7 +193,7 @@ public class FileBrowserActivity extends Activity {
 		long freeSpace = getFreeSpace(curDirString);
 		String formattedSpaceString = formatBytes(freeSpace);
 		if (freeSpace == 0) {
-			Log.d(LOGTAG, "NO FREE SPACE");
+//			Log.d(LOGTAG, "NO FREE SPACE");
 			File currentDir = new File(curDirString);
 			if(!currentDir.canWrite())
 				formattedSpaceString = "NON Writable";
@@ -223,26 +223,26 @@ public class FileBrowserActivity extends Activity {
 					int position, long id) {
 				chosenFile = fileList.get(position).file;
 				File sel = new File(path + "/" + chosenFile);
-				Log.d(LOGTAG, "Clicked:" + chosenFile);
+//				Log.d(LOGTAG, "Clicked:" + chosenFile);
 				if (sel.isDirectory()) {
 					if (sel.canRead()) {
 						// Adds chosen directory to list
 						pathDirsList.add(chosenFile);
 						path = new File(sel + "");
-						Log.d(LOGTAG, "Just reloading the list");
+//						Log.d(LOGTAG, "Just reloading the list");
 						loadFileList();
 						adapter.notifyDataSetChanged();
 						updateCurrentDirectoryTextView();
-						Log.d(LOGTAG, path.getAbsolutePath());
+//						Log.d(LOGTAG, path.getAbsolutePath());
 					} else {// if(sel.canRead()) {
 						showToast("Path does not exist or cannot be read");
 					}// } else {//if(sel.canRead()) {
 				}// if (sel.isDirectory()) {
 					// File picked or an empty directory message clicked
 				else {// if (sel.isDirectory()) {
-					Log.d(LOGTAG, "item clicked");
+//					Log.d(LOGTAG, "item clicked");
 					if (!directoryShownIsEmpty) {
-						Log.d(LOGTAG, "File selected:" + chosenFile);
+//						Log.d(LOGTAG, "File selected:" + chosenFile);
 						returnFileFinishActivity(sel.getAbsolutePath());
 					}
 				}// else {//if (sel.isDirectory()) {
@@ -300,9 +300,9 @@ public class FileBrowserActivity extends Activity {
 			for (int i = 0; i < fList.length; i++) {
 				// Convert into file path
 				File sel = new File(path, fList[i]);
-				Log.d(LOGTAG,
-						"File:" + fList[i] + " readable:"
-								+ (Boolean.valueOf(sel.canRead())).toString());
+//				Log.d(LOGTAG,
+//						"File:" + fList[i] + " readable:"
+//								+ (Boolean.valueOf(sel.canRead())).toString());
 				int drawableID = R.drawable.file_icon;
 				boolean canRead = sel.canRead();
 				// Set drawables
