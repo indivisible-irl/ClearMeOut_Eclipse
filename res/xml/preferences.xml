@@ -3,13 +3,13 @@
 
     
     <PreferenceCategory 
-        android:title="@string/pref_cat_service"
+        android:title="@string/pref_service_cat"
         >
     <CheckBoxPreference
-        android:key="@string/pref_key_service_active"
-        android:title="@string/pref_title_service_active"
-        android:summaryOn="@string/pref_summOn_service_active"
-        android:summaryOff="@string/pref_summOff_service_active"
+        android:key="@string/pref_service_active_key"
+        android:title="@string/pref_service_active_title"
+        android:summaryOn="@string/pref_service_active_summOn"
+        android:summaryOff="@string/pref_service_active_summOff"
         android:defaultValue="false"
         android:disableDependentsState="false"
         />
@@ -17,7 +17,7 @@
     
     
     <PreferenceCategory 
-        android:title="@string/pref_cat_delete"
+        android:title="@string/pref_delete_cat"
         >
         <EditTextPreference 
             android:key="@string/pref_key_target_folder"
@@ -44,16 +44,16 @@
             android:dependency="@string/pref_key_use_recursive_delete"
             />
         <CheckBoxPreference 
-            android:key="@string/pref_key_notify_on_delete"
-            android:title="@string/pref_title_notify_on_delete"
-            android:summaryOn="@string/pref_summOn_notify_on_delete"
-            android:summaryOff="@string/pref_summOff_notify_on_delete"
+            android:key="@string/pref_notify_on_delete_key"
+            android:title="@string/pref_notify_on_delete_title"
+            android:summaryOn="@string/pref_notify_on_delete_summOn"
+            android:summaryOff="@string/pref_notify_on_delete_summOff"
             android:defaultValue="false"
             />
     </PreferenceCategory>
     
     <PreferenceCategory 
-        android:title="@string/pref_cat_interval"
+        android:title="@string/pref_interval_cat"
         >
         <CheckBoxPreference 
             android:key="@string/pref_key_interval_type"
@@ -61,7 +61,7 @@
             android:summaryOn="@string/pref_summOn_interval_type"
             android:summaryOff="@string/pref_summOff_interval_type"
             android:defaultValue="true"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_service_active_key"
             />
         <com.indivisible.clearmeout.preferences.TimePreference
             android:key="@string/pref_key_daily_at"
@@ -69,7 +69,7 @@
             android:summary="@string/pref_summ_daily_at"
             android:defaultValue="@string/pref_default_daily_at"
             android:inputType="time"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_service_active_key"
             />
         <EditTextPreference
             android:key="@string/pref_key_periodic_at"
@@ -77,7 +77,7 @@
             android:summary="@string/pref_summ_periodic_at"
             android:inputType="number"
             android:defaultValue="@string/pref_default_periodic_at"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_service_active_key"
             />
         <CheckBoxPreference
             android:key="@string/pref_key_use_strict_alarms"
@@ -85,12 +85,12 @@
             android:summaryOn="@string/pref_summOn_use_strict_alarms"
             android:summaryOff="@string/pref_summOff_use_strict_alarms"
             android:defaultValue="false"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_service_active_key"
             />
 	</PreferenceCategory>
     
     <PreferenceCategory
-        android:title="@string/pref_cat_filters"
+        android:title="@string/pref_filters_cat"
         >
         <!--  filter by extension  -->
         <CheckBoxPreference 
@@ -99,7 +99,7 @@
             android:summaryOn="@string/pref_summOn_use_filter_extensions"
             android:summaryOff="@string/pref_summOff_use_filter_extensions"
             android:defaultValue="false"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_service_active_key"
             />
         <CheckBoxPreference
             android:key="@string/pref_key_delete_files_matching_extension"
@@ -123,7 +123,7 @@
             android:summaryOn="@string/pref_summOn_use_filter_pattern"
             android:summaryOff="@string/pref_summOff_use_filter_pattern"
             android:defaultValue="false"
-            android:dependency="@string/pref_key_service_active"
+            android:dependency="@string/pref_service_active_key"
             />
         <CheckBoxPreference
             android:key="@string/pref_key_delete_files_matching_pattern"

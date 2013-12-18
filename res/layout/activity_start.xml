@@ -14,21 +14,21 @@
         android:layout_height="80dp"
         android:layout_margin="8dp"
         android:gravity="center"
-        android:text="@string/start_b_delete"
+        android:text="@string/start_btn_delete"
         />
     <Button android:id="@+id/start_bPref"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="8dp"
         android:gravity="center"
-        android:text="@string/start_b_preferences"
+        android:text="@string/start_btn_preferences"
         />
     <Button android:id="@+id/start_bHelp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="8dp"
         android:gravity="center"
-        android:text="@string/start_b_help"
+        android:text="@string/start_btn_help"
         />
     
     <!--  HIDE IN RELEASE VERSIONS  -->
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center"
-        android:text="@string/start_b_refill"
+        android:text="@string/start_btn_refill"
         />
     
     <!--  TextViews  -->

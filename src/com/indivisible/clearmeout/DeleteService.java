@@ -48,7 +48,7 @@ public class DeleteService extends Service
 		    Log.d(TAG, "ClearMeOut emptying folder: " +folder);
 			recursiveDelete = prefs.getBoolean(getString(R.string.pref_key_use_recursive_delete), false);
 			deleteFolders = prefs.getBoolean(getString(R.string.pref_key_delete_folders), false);
-			notifyOnDelete = prefs.getBoolean(getString(R.string.pref_key_notify_on_delete), false);
+			notifyOnDelete = prefs.getBoolean(getString(R.string.pref_notify_on_delete_key), false);
 			
 			performDelete();
 			stopSelf();
@@ -189,7 +189,7 @@ public class DeleteService extends Service
 		Log.w(TAG, "Disabling service");
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		if (prefs.getBoolean(getString(R.string.pref_key_notify_on_delete), false))   //FIXME need separate bool pref for error disp
+		if (prefs.getBoolean(getString(R.string.pref_notify_on_delete_key), false))   //FIXME need separate bool pref for error disp
 		{
     		Toast.makeText(getApplicationContext(),
     				"Disabling ClearMeOut service due to an error. Is the target folder set and exist?",		//TODO strings.xml
@@ -197,7 +197,7 @@ public class DeleteService extends Service
 	    }
 		
 		Editor editPrefs = prefs.edit();
-		editPrefs.putBoolean(getString(R.string.pref_key_service_active), false);
+		editPrefs.putBoolean(getString(R.string.pref_service_active_key), false);
 		editPrefs.commit();
 		
 		Intent updateIntent = new Intent(getApplicationContext(), UpdateAlarmsService.class);
