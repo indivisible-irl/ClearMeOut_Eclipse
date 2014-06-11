@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory 
+        android:title="@string/pref_category_service" >
+        
+        <!-- TODO: Change to On/Off toggle -->
+	    <CheckBoxPreference
+	        android:key="@string/pref_service_isActive_key"
+	        android:title="@string/pref_service_isActive_name"
+	        android:summaryOn="@string/pref_service_isActive_summaryOn"
+	        android:summaryOff="@string/pref_service_isActive_summaryOff"
+	        android:defaultValue="@string/pref_service_isActive_default"
+	        android:disableDependentsState="false"
+	        />
+	    
+	    <EditTextPreference 
+	        android:key="@string/pref_service_targetFolder_key"
+	        android:title="@string/pref_service_targetFolder_name"
+	        android:summary="@string/pref_service_targetFolder_text"
+	        android:defaultValue="@string/pref_service_targetFolder_default"
+	        android:disableDependentsState="@string/pref_service_targetFolder_default"
+	        />
+    
+    </PreferenceCategory>
+
+</PreferenceScreen>

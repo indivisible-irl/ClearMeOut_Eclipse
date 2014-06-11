@@ -144,7 +144,8 @@ public class FileBrowserActivity extends Activity {
 	private void initializeButtons() {
 		Button upDirButton = (Button) this.findViewById(R.id.upDirectoryButton);
 		upDirButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+			@Override
+            public void onClick(View v) {
 //				Log.d(LOGTAG, "onclick for upDirButton");
 				loadDirectoryUp();
 				loadFileList();
@@ -157,7 +158,8 @@ public class FileBrowserActivity extends Activity {
 				.findViewById(R.id.selectCurrentDirectoryButton);
 		if (currentAction == SELECT_DIRECTORY) {
 			selectFolderButton.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
+				@Override
+                public void onClick(View v) {
 					Log.d(LOGTAG, "onclick for selectFolderButton");
 					returnDirectoryFinishActivity();
 				}
@@ -219,7 +221,8 @@ public class FileBrowserActivity extends Activity {
 		lParam.setMargins(15, 5, 15, 5);
 		lView.setAdapter(this.adapter);
 		lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
+			@Override
+            public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				chosenFile = fileList.get(position).file;
 				File sel = new File(path + "/" + chosenFile);
@@ -274,7 +277,8 @@ public class FileBrowserActivity extends Activity {
 
 		if (path.exists() && path.canRead()) {
 			FilenameFilter filter = new FilenameFilter() {
-				public boolean accept(File dir, String filename) {
+				@Override
+                public boolean accept(File dir, String filename) {
 					File sel = new File(dir, filename);
 					boolean showReadableFile = showHiddenFilesAndDirs
 							|| sel.canRead();
@@ -379,12 +383,14 @@ public class FileBrowserActivity extends Activity {
 	}// END private class Item {
 
 	private class ItemFileNameComparator implements Comparator<Item> {
-		public int compare(Item lhs, Item rhs) {
+		@Override
+        public int compare(Item lhs, Item rhs) {
 			return lhs.file.toLowerCase(Locale.getDefault()).compareTo(rhs.file.toLowerCase(Locale.getDefault()));
 		}
 	}
 
-	public void onConfigurationChanged(Configuration newConfig) {
+	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			Log.d(LOGTAG, "ORIENTATION_LANDSCAPE");

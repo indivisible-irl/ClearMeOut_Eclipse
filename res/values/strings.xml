@@ -8,6 +8,7 @@
         
         <string name="alarm_id">20901</string>
     
+        
     <!--  StartActivity Strings -->
     
         <string name="start_btn_preferences">Preferences</string>
@@ -15,120 +16,5 @@
         <string name="start_btn_help">Help</string>
         <string name="start_btn_refill">Refill target dir (for dev purposes)</string>
         <string name="start_tv_target_folder">Current target folder:\n\t-  %s</string>
-        
-        
-    <!--  Preferences  -->
-        
-        <!-- service settings -->
-        <string name="pref_service_cat">Scheduled delete service</string>
-            <!-- service_active -->
-            <string name="pref_service_active_key">service_active</string>
-            <string name="pref_service_active_title">Toggle ClearMeOut service</string>
-            <string name="pref_service_active_summOn">Service is now active</string>
-            <string name="pref_service_active_summOff">Service is currently inactive</string>
     
-            <!-- notify_on_delete -->
-            <string name="pref_notify_on_delete_key">notify_on_delete</string>
-            <string name="pref_notify_on_delete_title">Notify on delete?</string>
-            <string name="pref_notify_on_delete_summOn">Will show notification on delete</string>
-            <string name="pref_notify_on_delete_summOff">Will delete silently</string>
-        
-            <!-- target_folder -->
-            <string name="pref_key_target_folder">target_folder</string>
-            <string name="pref_title_target_folder">Select folder to clear</string>
-            <string name="pref_summ_target_folder">[Folder path]</string>
-            <string name="pref_default_target_folder">[set folder to start]</string>
-    
-        <!-- delete settings -->
-        <string name="pref_delete_cat">Delete settings</string>
-            <!-- recursive_delete -->
-            <string name="pref_key_use_recursive_delete">use_recursive_delete</string>
-            <string name="pref_title_use_recursive_delete">Recursive delete?</string>
-            <string name="pref_summOn_use_recursive_delete">Apply settings to all sub-folders too</string>
-            <string name="pref_summOff_use_recursive_delete">Leave sub-folders untouched</string>
-        
-            <!-- delete_folders -->
-            <string name="pref_key_delete_folders">delete_folders</string>
-            <string name="pref_title_delete_folders">Delete folders?</string>
-            <string name="pref_summOn_delete_folders">Will delete folders too</string>
-            <string name="pref_summOff_delete_folders">Will not delete folders</string>
-    
-        <!-- interval settings -->
-        <string name="pref_interval_cat">Schedule settings</string>
-            <!-- interval_type -->                                                  <!--  currently boolean, future ListPreference  -->
-            <string name="pref_key_interval_type">interval_type</string>
-            <string name="pref_title_interval_type">Schedule type:</string>
-            <string name="pref_summOn_interval_type">Clear folder once a day</string>
-            <string name="pref_summOff_interval_type">Clear folder periodically</string>
-    
-            <!-- daily_at -->
-            <string name="pref_key_daily_at">daily_at</string>
-            <string name="pref_title_daily_at">Clear at this time daily</string>
-            <string name="pref_summ_daily_at">Clear at %s every day</string>
-            <string name="pref_default_daily_at">00:00</string>
-    
-            <!-- periodic_at -->
-            <string name="pref_key_periodic_at">periodic_at</string>
-            <string name="pref_title_periodic_at">Periodic delete interval</string>
-            <string name="pref_summ_periodic_at">Clear the folder every %d minutes</string>
-            <string name="pref_default_periodic_at">60</string>
-    
-            <!-- use_strict_alarms -->
-            <string name="pref_key_use_strict_alarms">use_strict_alarms</string>
-            <string name="pref_title_use_strict_alarms">Use strict interval</string>
-            <string name="pref_summOn_use_strict_alarms">Clear folder exactly on interval (more battery intensive)</string>
-            <string name="pref_summOff_use_strict_alarms">Clear folder loosely on interval (more battery friendly)</string>
-    
-        <!-- filters settings -->
-        <string name="pref_filters_cat">Filter settings [unimplemented]</string>
-        
-        	<!-- extensions filter -->
-	            <!-- use_filter_extensions -->
-	            <string name="pref_key_use_filter_extensions">use_filter_extensions</string>
-	            <string name="pref_title_use_filter_extensions">Filter by file extension</string>
-	            <string name="pref_summOn_use_filter_extensions">Use file extension filter</string>
-	            <string name="pref_summOff_use_filter_extensions">Do not filter by file extensions</string>
-	    
-	            <!-- keep_files_matching_extension -->
-	            <string name="pref_key_delete_files_matching_extension">delete_files_matching_extension</string>
-	            <string name="pref_title_delete_files_matching_extension">Delete files by extension</string>
-	            <string name="pref_summOn_delete_files_matching_extension">Delete only files with these extensions</string>
-	            <string name="pref_summOff_delete_files_matching_extension">Delete all files without these extensions</string>
-	    
-	            <!-- filter_extensions -->                        <!--  currently EditText, future String array with list/grid view??  -->
-	            <string name="pref_key_filter_extensions">filter_ext_choices</string>
-	            <string name="pref_title_filter_extensions">File extensions</string>
-	            <string name="pref_summ_filter_extensions">Separate multiple extensions with commas \',\'</string>
-	            <string name="pref_default_filter_extensions">[none]</string>
-    
-	        <!-- patterns filter -->
-	            <!-- use_filter_pattern -->
-	            <string name="pref_key_use_filter_pattern">use_filter_pattern</string>
-	            <string name="pref_title_use_filter_pattern">Filter by pattern</string>
-	            <string name="pref_summOn_use_filter_pattern">Use file pattern filter</string>
-	            <string name="pref_summOff_use_filter_pattern">Do not filter by file pattern</string>
-	    
-	            <!-- keep_files_matching_pattern -->
-	            <string name="pref_key_delete_files_matching_pattern">delete_files_matching_pattern</string>
-	            <string name="pref_title_delete_files_matching_pattern">Delete files by pattern</string>
-	            <string name="pref_summOn_delete_files_matching_pattern">Delete only files matching this pattern</string>
-	            <string name="pref_summOff_delete_files_matching_pattern">Keep only files matching this pattern</string>
-	    
-	            <!-- filter_pattern -->
-	            <string name="pref_key_filter_pattern">filter_pattern</string>
-	            <string name="pref_title_filter_pattern">Filename pattern</string>
-	            <string name="pref_summ_filter_pattern">See \'Help\' for pattern formatting</string>
-	            <string name="pref_default_filter_pattern">[none]</string>
-    
-    
-    <!--  Quick help text for temp use before implementing a real help screen  -->
-    <string name="help_title">ClearMeOut Help</string>
-    <string name="help_text">
-        This app is still in the dev stages so here\'s a few tips to get you started:
-        \n\nUsing a \'Recursive delete\' will delete a folder\'s contents AND ALL sub-folders\'s files too.\nUncheck this option to only delete files directly within the target folder.
-        \nOptional deletion or not the sub-folders themselves with \'Delete Folders\'.
-        \n\nUsing a \'Strict interval\' means that the folder will be cleared exactly when you set it for.\nThis possible advantage has the disadvantage of using up some small amount of extra battery in some situations.\nIf this is an issue for you disable this option.
-        \n\nIf you ONLY want to manualy clear a folder:\n- set the target folder\n- hit the \'ClearMeOut Now\' button when desired\n\nAs long as a folder is set the \'ClearMeOut Now\' button will work and respect all deletion settings. 
-    </string>
-
 </resources>

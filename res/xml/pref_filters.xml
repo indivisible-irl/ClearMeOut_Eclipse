@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory 
+        android:title="@string/pref_category_filters" >
+        
+        <!--  filter by extension  -->
+        <CheckBoxPreference 
+            android:key="@string/pref_filter_extensions_isActive_key"
+            android:title="@string/pref_filter_extensions_isActive_name"
+            android:summaryOn="@string/pref_filter_extensions_isActive_summaryOn"
+            android:summaryOff="@string/pref_filter_extensions_isActive_summaryOff"
+            android:defaultValue="@string/pref_filter_extensions_isActive_default"
+            android:dependency="@string/pref_service_isActive_key"
+            />
+        <CheckBoxPreference
+            android:key="@string/pref_filter_extensions_isWhitelist_key"
+            android:title="@string/pref_filter_extensions_isWhitelist_name"
+            android:summaryOn="@string/pref_filter_extensions_isWhitelist_summaryOn"
+            android:summaryOff="@string/pref_filter_extensions_isWhitelist_summaryOff"
+            android:defaultValue="@string/pref_filter_extensions_isWhitelist_default"
+            android:dependency="@string/pref_filter_extensions_isActive_key"
+            />
+        <EditTextPreference 
+            android:key="@string/pref_filter_extensions_list_key"
+            android:title="@string/pref_filter_extensions_list_name"
+            android:summary="@string/pref_filter_extensions_list_text"
+            android:defaultValue="@string/pref_filter_extensions_list_default"
+            android:dependency="@string/pref_filter_extensions_isActive_key"
+            />
+        
+        <!--  filter by pattern  -->
+        <CheckBoxPreference 
+            android:key="@string/pref_filter_filenames_isActive_key"
+            android:title="@string/pref_filter_filenames_isActive_name"
+            android:summaryOn="@string/pref_filter_filenames_isActive_summaryOn"
+            android:summaryOff="@string/pref_filter_filenames_isActive_summaryOff"
+            android:defaultValue="@string/pref_filter_filenames_isActive_default"
+            android:dependency="@string/pref_service_isActive_key"
+            />
+        <CheckBoxPreference
+            android:key="@string/pref_filter_filenames_isWhitelist_key"
+            android:title="@string/pref_filter_filenames_isWhitelist_name"
+            android:summaryOn="@string/pref_filter_filenames_isWhitelist_summaryOn"
+            android:summaryOff="@string/pref_filter_filenames_isWhitelist_summaryOff"
+            android:defaultValue="@string/pref_filter_filenames_isWhitelist_default"
+            android:dependency="@string/pref_filter_filenames_isActive_key"
+            />
+        <EditTextPreference 
+            android:key="@string/pref_filter_filenames_patterns_key"
+            android:title="@string/pref_filter_filenames_patterns_name"
+            android:summary="@string/pref_filter_filenames_patterns_text"
+            android:defaultValue="@string/pref_filter_filenames_patterns_default"
+            android:dependency="@string/pref_filter_filenames_isActive_key"
+            />
+        
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

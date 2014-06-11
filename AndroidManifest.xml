@@ -6,8 +6,8 @@
     android:versionName="0.3" >
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="17" />    <!-- change to v11 min? -->
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>

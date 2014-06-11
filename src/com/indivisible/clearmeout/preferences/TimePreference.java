@@ -10,6 +10,7 @@ import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TimePicker;
 
 public class TimePreference extends DialogPreference {
@@ -50,7 +51,7 @@ public class TimePreference extends DialogPreference {
     protected View onCreateDialogView() {
         picker=new TimePicker(getContext());
         picker.setIs24HourView(true);
-        picker.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
+        picker.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         
         return(picker);
     }

@@ -29,7 +29,8 @@ public class AndroidFileBrowserExampleActivity extends Activity {
         final Button startBrowserButton = (Button) findViewById(R.id.startFileBrowserButtonID);
         
         startBrowserButton.setOnClickListener(new View.OnClickListener() {
-    		public void onClick(View v) {
+    		@Override
+            public void onClick(View v) {
     			Log.d(LOGTAG, "Start browsing button pressed");
     			Intent fileExploreIntent = new Intent(
     					com.vassiliev.androidfilebrowser.FileBrowserActivity.INTENT_ACTION_SELECT_DIR,
@@ -53,7 +54,8 @@ public class AndroidFileBrowserExampleActivity extends Activity {
         
         final Button startBrowser4FileButton = (Button) findViewById(R.id.startFileBrowser4FileButtonID);
         startBrowser4FileButton.setOnClickListener(new View.OnClickListener() {
-    		public void onClick(View v) {
+    		@Override
+            public void onClick(View v) {
     			Log.d(LOGTAG, "StartFileBrowser4File button pressed");
     			Intent fileExploreIntent = new Intent(
     					com.vassiliev.androidfilebrowser.FileBrowserActivity.INTENT_ACTION_SELECT_FILE,
@@ -75,7 +77,8 @@ public class AndroidFileBrowserExampleActivity extends Activity {
         final Button start4FileHideNonReadButton = 
         		(Button) findViewById(R.id.startBrowse4FileHideNonReadButtonID);
         start4FileHideNonReadButton.setOnClickListener(new View.OnClickListener() {
-    		public void onClick(View v) {
+    		@Override
+            public void onClick(View v) {
     			Log.d(LOGTAG, "StartFileBrowser4File button pressed");
     			Intent fileExploreIntent = new Intent(
     					com.vassiliev.androidfilebrowser.FileBrowserActivity.INTENT_ACTION_SELECT_FILE,
