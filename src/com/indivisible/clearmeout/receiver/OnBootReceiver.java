@@ -1,5 +1,6 @@
-package com.indivisible.clearmeout;
+package com.indivisible.clearmeout.receiver;
 
+import com.indivisible.clearmeout.service.UpdateAlarmsService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

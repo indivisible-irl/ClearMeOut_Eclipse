@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE xml>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.indivisible.clearmeout"
     android:installLocation="internalOnly"
@@ -22,7 +22,7 @@
         
         <!--  Broadcast Receivers  -->
         <receiver
-            android:name="com.indivisible.clearmeout.OnBootReceiver">  
+            android:name="com.indivisible.clearmeout.receiver.OnBootReceiver">  
     		<intent-filter>  
         		<action android:name="android.intent.action.BOOT_COMPLETED" />  
     		</intent-filter>  
@@ -31,18 +31,18 @@
         
         <!--  Services  -->
         <service 
-            android:name="com.indivisible.clearmeout.DeleteService"
+            android:name="com.indivisible.clearmeout.service.DeleteService"
             android:exported="false">
         </service>
         <service
-            android:name="com.indivisible.clearmeout.UpdateAlarmsService"
+            android:name="com.indivisible.clearmeout.service.UpdateAlarmsService"
             android:exported="false" >
         </service>
         
         
         <!--  Activities  -->
         <activity
-            android:name="com.indivisible.clearmeout.StartActivity"
+            android:name="com.indivisible.clearmeout.activity.RootPreferencesActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,7 +50,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.indivisible.clearmeout.PreferencesActivity"
+            android:name="com.indivisible.clearmeout.activity.StartActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.indivisible.clearmeout.activity.MainPrefsActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.indivisible.clearmeout.activity.FiltersPreferenceActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.indivisible.clearmeout.activity.IntervalsPreferenceActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

@@ -1,4 +1,4 @@
-package com.indivisible.clearmeout;
+package com.indivisible.clearmeout.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,13 +12,15 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+import com.indivisible.clearmeout.R;
 import com.indivisible.clearmeout.preferences.TimePreference;
+import com.indivisible.clearmeout.service.UpdateAlarmsService;
 import com.mburman.fileexplore.FileExplore;
 
 
 @SuppressWarnings("deprecation")
 //FIXME comment this to view where to update to newer functionality
-public class PreferencesActivity
+public class MainPrefsActivity
         extends PreferenceActivity
         implements OnPreferenceClickListener, OnSharedPreferenceChangeListener
 {
@@ -49,7 +51,7 @@ public class PreferencesActivity
     {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.preferences);
+        //FIXME: addPreferencesFromResource(R.xml.preferences_main);
         //		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         initPreferences();
@@ -104,7 +106,7 @@ public class PreferencesActivity
     {
         //pCbServiceActive = (CheckBoxPreference) findPreference(getString(R.string.pref_key_service_active));
 
-        pEtFolder = (EditTextPreference) findPreference(getString(R.string.pref_service_targetFolder_key));
+        pEtFolder = (EditTextPreference) findPreference(getString(R.string.pref_delete_targetFolder_key));
         //pCbRecursiveDelete = (CheckBoxPreference) findPreference(getString(R.string.pref_key_use_recursive_delete));
         //pCbDeleteFolders = (CheckBoxPreference) findPreference(getString(R.string.pref_key_delete_folders));
         //pCbNotifyOnDelete = (CheckBoxPreference) findPreference(getString(R.string.pref_key_notify_on_delete));

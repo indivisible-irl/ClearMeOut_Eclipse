@@ -1,4 +1,4 @@
-package com.indivisible.clearmeout;
+package com.indivisible.clearmeout.service;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+import com.indivisible.clearmeout.R;
 
 public class DeleteService
         extends Service
@@ -37,8 +38,7 @@ public class DeleteService
         // get needed settings and test folder pref saved
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
-        folder = prefs
-                .getString(getString(R.string.pref_service_targetFolder_key), "---");
+        folder = prefs.getString(getString(R.string.pref_delete_targetFolder_key), "---");
 
         if (folder.equals("---"))
         {
@@ -56,7 +56,8 @@ public class DeleteService
                     .getBoolean(getString(R.string.pref_delete_doDeleteFolders_key),
                             false);
             notifyOnDelete = prefs
-                    .getBoolean(getString(R.string.pref_delete_notifyOnDelete_key), false);
+                    .getBoolean(getString(R.string.pref_service_notifyOnDelete_key),
+                            false);
 
             performDelete();
             stopSelf();
@@ -203,7 +204,7 @@ public class DeleteService
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
-        if (prefs.getBoolean(getString(R.string.pref_delete_notifyOnDelete_key), false))   //FIXME need separate bool pref for error disp
+        if (prefs.getBoolean(getString(R.string.pref_service_notifyOnDelete_key), false))   //FIXME need separate bool pref for error disp
         {
             Toast.makeText(getApplicationContext(),
                     "Disabling ClearMeOut service due to an error. Is the target folder set and exist?",		//TODO strings.xml
