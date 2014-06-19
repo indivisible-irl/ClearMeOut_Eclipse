@@ -1,4 +1,4 @@
-package com.indivisible.clearmeout;
+package com.indivisible.clearmeout.service;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import com.indivisible.clearmeout.R;
 
 public class UpdateAlarmsService
         extends Service

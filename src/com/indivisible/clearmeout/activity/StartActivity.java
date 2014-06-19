@@ -1,4 +1,4 @@
-package com.indivisible.clearmeout;
+package com.indivisible.clearmeout.activity;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import com.indivisible.clearmeout.R;
+import com.indivisible.clearmeout.service.DeleteService;
 
 public class StartActivity
         extends Activity
@@ -51,8 +53,8 @@ public class StartActivity
         super.onResume();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        folder = prefs.getString(getString(R.string.pref_service_targetFolder_key),
-                getString(R.string.pref_service_targetFolder_default));
+        folder = prefs.getString(getString(R.string.pref_delete_targetFolder_key),
+                getString(R.string.pref_delete_targetFolder_default));
 
         tvFolderHint.setText(String.format(getString(R.string.start_tv_target_folder),
                 folder));
@@ -68,7 +70,7 @@ public class StartActivity
         {
             case R.id.start_bPref:
                 Log.d(TAG, "Opening PreferencesActivity...");
-                Intent openPrefIntent = new Intent(this, PreferencesActivity.class);
+                Intent openPrefIntent = new Intent(this, MainPrefsActivity.class);
                 startActivity(openPrefIntent);
                 break;
 
